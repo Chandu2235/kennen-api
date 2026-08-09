@@ -262,6 +262,22 @@ app.UseRateLimiter();
 // secrets; all data endpoints are protected by JWT.
 var adminFiles = new PhysicalFileProvider(adminRoot);
 
+// If a dedicated admin domain is pointed at this app, serve the admin SPA from
+// the root path for that host. API, health, and swagger routes are left untouched.
+app.Use(async (context, next) =>
+{
+    if (context.Request.Host.Host.Equals("admin.kennen-technologies.com", StringComparison.OrdinalIgnoreCase))
+    {
+        var path = context.Request.Path.Value;
+        if (path is "/" or "/index.html")
+        {
+            context.Request.Path = "/admin/index.html";
+        }
+    }
+
+    await next(context);
+});
+
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
