@@ -15,6 +15,12 @@ public class Lead : EntityBase
 
     public string? Company { get; set; }
 
+    /// <summary>Phone number supplied by the visitor.</summary>
+    public string? Phone { get; set; }
+
+    /// <summary>Type of enterprise engagement the visitor selected, e.g. "enterprise-consulting".</summary>
+    public string? Engagement { get; set; }
+
     public string Message { get; set; } = string.Empty;
 
     /// <summary>Where the lead came from, e.g. "website-contact" or "consultation-cta".</summary>

@@ -20,6 +20,13 @@ public class ContactRequest
     [MaxLength(200)]
     public string? Company { get; set; }
 
+    [Phone(ErrorMessage = "Please enter a valid phone number.")]
+    [MaxLength(40)]
+    public string? Phone { get; set; }
+
+    [MaxLength(64)]
+    public string? Engagement { get; set; }
+
     [Required(ErrorMessage = "Please enter your message.")]
     [MinLength(10, ErrorMessage = "Please provide a little more detail.")]
     [MaxLength(5000)]
@@ -46,6 +53,8 @@ public class LeadResponse
     public string Name { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
     public string? Company { get; set; }
+    public string? Phone { get; set; }
+    public string? Engagement { get; set; }
     public string Message { get; set; } = string.Empty;
     public string Source { get; set; } = string.Empty;
     public LeadStatus Status { get; set; }
@@ -59,6 +68,8 @@ public class LeadResponse
         Name = lead.Name,
         Email = lead.Email,
         Company = lead.Company,
+        Phone = lead.Phone,
+        Engagement = lead.Engagement,
         Message = lead.Message,
         Source = lead.Source,
         Status = lead.Status,

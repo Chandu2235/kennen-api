@@ -190,6 +190,8 @@
           <td>${escape(l.name)}</td>
           <td>${escape(l.email)}</td>
           <td>${escape(l.company) || '—'}</td>
+          <td>${escape(l.phone) || '—'}</td>
+          <td>${escape(l.engagement) || '—'}</td>
           <td><span class="badge ${l.status}">${l.status}</span></td>
           <td>${new Date(l.createdAtUtc).toLocaleString()}</td>
           <td>
@@ -212,6 +214,8 @@
         <h2>Lead from ${escape(lead.name)}</h2>
         <p><strong>Email:</strong> ${escape(lead.email)}</p>
         <p><strong>Company:</strong> ${escape(lead.company) || '—'}</p>
+        <p><strong>Phone:</strong> ${escape(lead.phone) || '—'}</p>
+        <p><strong>Engagement:</strong> ${escape(lead.engagement) || '—'}</p>
         <p><strong>Source:</strong> ${escape(lead.source)}</p>
         <p><strong>Status:</strong> <span class="badge ${lead.status}">${lead.status}</span></p>
         <p><strong>Received:</strong> ${new Date(lead.createdAtUtc).toLocaleString()}</p>

@@ -82,6 +82,8 @@
     const nameInput = contactForm.querySelector('#name');
     const emailInput = contactForm.querySelector('#email');
     const companyInput = contactForm.querySelector('#company');
+    const phoneInput = contactForm.querySelector('#phone');
+    const engagementInput = contactForm.querySelector('#engagement');
     const messageInput = contactForm.querySelector('#message');
     const formStatus = contactForm.querySelector('#form-status');
     const submitButton = contactForm.querySelector('button[type="submit"]');
@@ -97,7 +99,7 @@
       e.preventDefault();
       setStatus('', null);
 
-      [nameInput, emailInput, messageInput].forEach(input => {
+      [nameInput, emailInput, phoneInput, engagementInput, messageInput].forEach(input => {
         if (input) input.removeAttribute('aria-invalid');
       });
 
@@ -113,6 +115,16 @@
       } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value.trim())) {
         errors.push('Please enter a valid email address.');
         if (emailInput) emailInput.setAttribute('aria-invalid', 'true');
+      }
+
+      if (!phoneInput || !phoneInput.value.trim()) {
+        errors.push('Please enter your phone number.');
+        if (phoneInput) phoneInput.setAttribute('aria-invalid', 'true');
+      }
+
+      if (!engagementInput || !engagementInput.value) {
+        errors.push('Please select an enterprise engagement.');
+        if (engagementInput) engagementInput.setAttribute('aria-invalid', 'true');
       }
 
       // The API requires at least 10 characters, so mirror that here to avoid a round-trip.
@@ -147,6 +159,8 @@
             name: nameInput.value.trim(),
             email: emailInput.value.trim(),
             company: companyInput && companyInput.value.trim() ? companyInput.value.trim() : null,
+            phone: phoneInput && phoneInput.value.trim() ? phoneInput.value.trim() : null,
+            engagement: engagementInput && engagementInput.value ? engagementInput.value : null,
             message: messageInput.value.trim(),
             source: 'website-contact'
           })
@@ -191,7 +205,7 @@
       }
     });
 
-    [nameInput, emailInput, messageInput].forEach(input => {
+    [nameInput, emailInput, phoneInput, engagementInput, messageInput].forEach(input => {
       if (input) {
         input.addEventListener('input', () => {
           if (input.hasAttribute('aria-invalid')) {

@@ -14,6 +14,8 @@ public class LeadConfiguration : IEntityTypeConfiguration<Lead>
         builder.Property(x => x.Name).HasMaxLength(200).IsRequired();
         builder.Property(x => x.Email).HasMaxLength(320).IsRequired();
         builder.Property(x => x.Company).HasMaxLength(200);
+        builder.Property(x => x.Phone).HasMaxLength(40);
+        builder.Property(x => x.Engagement).HasMaxLength(64);
         builder.Property(x => x.Message).HasMaxLength(5000).IsRequired();
         builder.Property(x => x.Source).HasMaxLength(64).IsRequired();
         builder.Property(x => x.InternalNotes).HasMaxLength(4000);

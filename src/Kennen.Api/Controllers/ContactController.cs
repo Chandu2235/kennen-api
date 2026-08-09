@@ -54,6 +54,8 @@ public class ContactController : ControllerBase
             Name = request.Name.Trim(),
             Email = email,
             Company = string.IsNullOrWhiteSpace(request.Company) ? null : request.Company.Trim(),
+            Phone = string.IsNullOrWhiteSpace(request.Phone) ? null : request.Phone.Trim(),
+            Engagement = string.IsNullOrWhiteSpace(request.Engagement) ? null : request.Engagement.Trim(),
             Message = request.Message.Trim(),
             Source = string.IsNullOrWhiteSpace(request.Source) ? "website-contact" : request.Source.Trim(),
             IpAddress = HttpContext.Connection.RemoteIpAddress?.ToString(),
