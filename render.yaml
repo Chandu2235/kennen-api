@@ -1,0 +1,41 @@
+services:
+  - type: web
+    name: kennen-api
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    branch: main
+    healthCheckPath: /health
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: ASPNETCORE_URLS
+        value: http://+:8080
+      - key: ConnectionStrings__Default
+        sync: false  # Set manually in Render dashboard with your Supabase string
+      - key: Jwt__Issuer
+        value: https://kennen-api.onrender.com
+      - key: Jwt__Audience
+        value: kennen-website
+      - key: Jwt__AccessTokenMinutes
+        value: 15
+      - key: Jwt__RefreshTokenDays
+        value: 7
+      - key: Cors__AllowedOrigins__0
+        value: https://kennen-technologies.com
+      - key: Seed__AdminEmail
+        value: admin@kennen-technologies.com
+      - key: Seed__SeedContent
+        value: "true"
+      - key: Database__AutoMigrate
+        value: "true"
+      - key: FileStorage__RootPath
+        value: /app/storage/resumes
+    disk:
+      name: kennen-storage
+      mountPath: /app/storage
+      sizeGB: 1
+    # Set these three manually in the Render dashboard after the first deploy:
+    #   ConnectionStrings__Default  (Supabase connection string)
+    #   Jwt__Key                    (>= 32 character random string)
+    #   Seed__AdminPassword         (strong admin password)

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kennen Admin</title>
+  <link rel="stylesheet" href="admin.css">
+  <script>
+    // The admin is sometimes opened through a browser preview tunnel on a different
+    // origin. In that case, point API calls at the known local API port; otherwise
+    // keep them relative (same-origin) for production deployments.
+    window.__KENNEN_API_BASE__ =
+      (window.location.hostname === '127.0.0.1' && window.location.port !== '5220')
+        ? 'http://localhost:5220'
+        : '';
+  </script>
+</head>
+<body>
+  <div id="app">
+    <div class="login" id="login-view" style="display:none;">
+      <div class="login-box">
+        <h1>Kennen Admin</h1>
+        <p>Sign in to manage leads, content, and careers.</p>
+        <form id="login-form">
+          <label for="email">Email</label>
+          <input type="email" id="email" required value="admin@kennen-technologies.com">
+          <label for="password">Password</label>
+          <input type="password" id="password" required>
+          <button type="submit">Sign in</button>
+          <div id="login-error" class="error" role="alert"></div>
+        </form>
+      </div>
+    </div>
+
+    <div class="admin" id="admin-view" style="display:none;">
+      <aside class="sidebar">
+        <div class="brand">
+          <h2>Kennen</h2>
+          <span id="user-name">Admin</span>
+        </div>
+        <nav>
+          <a href="#" data-page="dashboard" class="active">Dashboard</a>
+          <a href="#" data-page="leads">Leads</a>
+          <a href="#" data-page="content">Content</a>
+          <a href="#" data-page="careers">Careers</a>
+          <a href="#" data-page="applications">Applications</a>
+        </nav>
+        <button id="logout" class="btn-secondary">Log out</button>
+      </aside>
+
+      <main class="main">
+        <header>
+          <h1 id="page-title">Dashboard</h1>
+          <div id="global-error" class="global-error" role="alert"></div>
+        </header>
+
+        <section id="page-dashboard" class="page">
+          <div class="cards" id="dashboard-cards"></div>
+        </section>
+
+        <section id="page-leads" class="page" style="display:none;">
+          <div class="filters">
+            <input id="lead-search" type="text" placeholder="Search name, email or company…">
+            <select id="lead-status">
+              <option value="">All statuses</option>
+              <option value="New">New</option>
+              <option value="Contacted">Contacted</option>
+              <option value="Qualified">Qualified</option>
+              <option value="Won">Won</option>
+              <option value="Lost">Lost</option>
+              <option value="Spam">Spam</option>
+            </select>
+            <button id="lead-refresh" class="btn-secondary">Refresh</button>
+          </div>
+          <table class="data-table">
+            <thead>
+              <tr><th>Name</th><th>Email</th><th>Company</th><th>Status</th><th>Received</th><th>Actions</th></tr>
+            </thead>
+            <tbody id="leads-body"></tbody>
+          </table>
+          <div class="pagination" id="leads-paging"></div>
+        </section>
+
+        <section id="page-content" class="page" style="display:none;">
+          <div id="content-list"></div>
+        </section>
+
+        <section id="page-careers" class="page" style="display:none;">
+          <button id="new-job" class="btn-primary">+ New job</button>
+          <table class="data-table">
+            <thead>
+              <tr><th>Title</th><th>Department</th><th>Location</th><th>Open</th><th>Actions</th></tr>
+            </thead>
+            <tbody id="jobs-body"></tbody>
+          </table>
+        </section>
+
+        <section id="page-applications" class="page" style="display:none;">
+          <div class="filters">
+            <input id="app-search" type="text" placeholder="Search applicant name or email…">
+            <button id="app-refresh" class="btn-secondary">Refresh</button>
+          </div>
+          <table class="data-table">
+            <thead>
+              <tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Received</th><th>Actions</th></tr>
+            </thead>
+            <tbody id="applications-body"></tbody>
+          </table>
+          <div class="pagination" id="apps-paging"></div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Modal for lead details, job editor, etc. -->
+  <div class="modal-overlay" id="modal" style="display:none;">
+    <div class="modal" id="modal-body"></div>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>
