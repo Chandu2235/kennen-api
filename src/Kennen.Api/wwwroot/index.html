@@ -1,675 +1,1088 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Kennen Technologies delivers AI, cloud, software engineering, and enterprise digital transformation solutions for Fortune 500 and growth enterprises.">
-    <meta name="theme-color" content="#0A0826">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Kennen Technologies delivers AI, cloud, software engineering, and enterprise digital transformation solutions for Fortune 500 and growth enterprises."
+    />
+    <meta name="theme-color" content="#0A0826" />
     <title>Kennen Technologies | Enterprise Digital Solutions</title>
-    <link rel="canonical" href="https://kennen-technologies.com/">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="canonical" href="https://kennen-technologies.com/" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" type="image/png" href="favicon.png" />
 
     <!-- Google Analytics 4. Loaded from the head so the pageview fires before the rest of the page renders. -->
     <script src="config.js?v=2"></script>
     <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
 
-        (function () {
-            var id = window.KENNEN_CONFIG && window.KENNEN_CONFIG.gaMeasurementId;
-            // Skip the network request entirely when no ID is configured (e.g. local development).
-            if (!id || id === 'G-XXXXXXXXXX') return;
+      (function () {
+        var id = window.KENNEN_CONFIG && window.KENNEN_CONFIG.gaMeasurementId;
+        // Skip the network request entirely when no ID is configured (e.g. local development).
+        if (!id || id === "G-XXXXXXXXXX") return;
 
-            var tag = document.createElement('script');
-            tag.async = true;
-            tag.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(id);
-            document.head.appendChild(tag);
+        var tag = document.createElement("script");
+        tag.async = true;
+        tag.src =
+          "https://www.googletagmanager.com/gtag/js?id=" +
+          encodeURIComponent(id);
+        document.head.appendChild(tag);
 
-            gtag('js', new Date());
-            gtag('config', id);
-        })();
+        gtag("js", new Date());
+        gtag("config", id);
+      })();
     </script>
 
     <!-- Vercel Web Analytics -->
     <script defer src="/_vercel/insights/script.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <a class="skip-link" href="#main-content">Skip to main content</a>
 
     <!-- Navigation -->
     <nav class="navbar" aria-label="Main navigation">
-        <div class="container">
-            <a class="nav-brand" href="#main-content">
-                <span class="nav-mark" aria-hidden="true">K</span>
-                <span class="nav-brand-text">Kennen<span>Technologies</span></span>
-            </a>
-            <ul class="nav-menu" id="main-menu">
-                <li><a href="#about">About</a></li>
-                <li><a href="#industries">Industries</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#ai">AI Solutions</a></li>
-                <li><a href="#why-us">Why Us</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-            <div class="nav-cta">
-                <a href="#contact" class="btn btn-primary btn-sm">Become a partner</a>
-            </div>
-            <button type="button" class="nav-toggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="main-menu">
-                <span class="hamburger" aria-hidden="true"></span>
-            </button>
+      <div class="container">
+        <a class="nav-brand" href="#main-content">
+          <span class="nav-mark" aria-hidden="true">K</span>
+          <span class="nav-brand-text">Kennen<span>Technologies</span></span>
+        </a>
+        <ul class="nav-menu" id="main-menu">
+          <li><a href="#about">About</a></li>
+          <li><a href="#industries">Industries</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#ai">AI Solutions</a></li>
+          <li><a href="#why-us">Why Us</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="nav-cta">
+          <a href="#contact" class="btn btn-primary btn-sm">Become a partner</a>
         </div>
+        <button
+          type="button"
+          class="nav-toggle"
+          aria-label="Open navigation menu"
+          aria-expanded="false"
+          aria-controls="main-menu"
+        >
+          <span class="hamburger" aria-hidden="true"></span>
+        </button>
+      </div>
     </nav>
 
     <main id="main-content" tabindex="-1">
-    <!-- Hero Section -->
-    <section class="hero">
+      <!-- Hero Section -->
+      <section class="hero">
         <div class="hero-bg" aria-hidden="true"></div>
         <div class="container hero-grid">
-            <div class="hero-content">
-                <span class="eyebrow">Enterprise Digital Transformation</span>
-                <h1>Innovating digital solutions for <span class="text-accent">enterprise growth</span></h1>
-                <p>Kennen Technologies is your end-to-end digital transformation partner — delivering cutting-edge AI, cloud, software engineering, and enterprise solutions that drive measurable business outcomes across industries.</p>
-                <div class="hero-buttons">
-                    <a href="#services" class="btn btn-primary">Explore Our Services</a>
-                    <a href="#contact" class="btn btn-ghost">Schedule a Consultation</a>
-                </div>
-                <dl class="hero-metrics">
-                    <!-- <div>
+          <div class="hero-content">
+            <span class="eyebrow">Enterprise Digital Transformation</span>
+            <h1>
+              Innovating digital solutions for
+              <span class="text-accent">enterprise growth</span>
+            </h1>
+            <p>
+              Kennen Technologies is your end-to-end digital transformation
+              partner — delivering cutting-edge AI, cloud, software engineering,
+              and enterprise solutions that drive measurable business outcomes
+              across industries.
+            </p>
+            <div class="hero-buttons">
+              <a href="#services" class="btn btn-primary"
+                >Explore Our Services</a
+              >
+              <a href="#contact" class="btn btn-ghost"
+                >Schedule a Consultation</a
+              >
+            </div>
+            <dl class="hero-metrics">
+              <!-- <div>
                         <dt>12</dt>
                         <dd>Industry verticals served</dd>
                     </div> -->
-                    <div>
-                        <dt>24×7</dt>
-                        <dd>Global delivery &amp; support</dd>
-                    </div>
-                    <div>
-                        <dt>98%</dt>
-                        <dd>On-time delivery rate</dd>
-                    </div>
-                </dl>
+              <div>
+                <dt>24×7</dt>
+                <dd>Global delivery &amp; support</dd>
+              </div>
+              <div>
+                <dt>98%</dt>
+                <dd>On-time delivery rate</dd>
+              </div>
+            </dl>
+          </div>
+          <aside class="hero-panel" aria-label="Core capabilities">
+            <div class="hero-panel-head">
+              <span class="pulse-dot" aria-hidden="true"></span>
+              Core capability stack
             </div>
-            <aside class="hero-panel" aria-label="Core capabilities">
-                <div class="hero-panel-head">
-                    <span class="pulse-dot" aria-hidden="true"></span>
-                    Core capability stack
-                </div>
-                <ul class="hero-capabilities">
-                    <li><span aria-hidden="true">◆</span> AI Solutions</li>
-                    <li><span aria-hidden="true">◆</span> Cloud and DevOps</li>
-                    <li><span aria-hidden="true">◆</span> Data and Analytics</li>
-                    <li><span aria-hidden="true">◆</span> Product Engineering</li>
-                    <li><span aria-hidden="true">◆</span> Cyber Security</li>
-                    <li><span aria-hidden="true">◆</span> ERP and Integration</li>
-                </ul>
-                <p class="hero-panel-note">Delivered by certified engineers across onshore, nearshore, and offshore centres.</p>
-            </aside>
+            <ul class="hero-capabilities">
+              <li><span aria-hidden="true">◆</span> AI Solutions</li>
+              <li><span aria-hidden="true">◆</span> Cloud and DevOps</li>
+              <li><span aria-hidden="true">◆</span> Data and Analytics</li>
+              <li><span aria-hidden="true">◆</span> Product Engineering</li>
+              <li><span aria-hidden="true">◆</span> Cyber Security</li>
+              <li><span aria-hidden="true">◆</span> ERP and Integration</li>
+            </ul>
+            <p class="hero-panel-note">
+              Delivered by certified engineers across onshore, nearshore, and
+              offshore centres.
+            </p>
+          </aside>
         </div>
-    </section>
+      </section>
 
-    <!-- About Section -->
-    <section id="about" class="about section-base">
+      <!-- About Section -->
+      <section id="about" class="about section-base">
         <div class="container about-layout">
-            <div class="about-main">
-                <div class="section-head">
-                    <span class="eyebrow">About us</span>
-                    <h2>A technology partner built for the enterprise era</h2>
-                </div>
-                <div class="about-content">
-                    <p>Kennen Technologies is a premier technology consulting and digital transformation company built for the enterprise era. We architect, build, and scale solutions that empower organisations to compete in an AI-first, cloud-native world. From Fortune 500 enterprises to high-growth startups, our multidisciplinary teams bring deep domain expertise and a relentless focus on measurable outcomes.</p>
-                    <p>Founded on the principles of innovation, agility, and quality, we operate across the full spectrum of enterprise technology — spanning AI &amp; machine learning, software and product engineering, quality assurance, cloud infrastructure, ERP, CRM, digital marketing, and workforce solutions. Our global delivery model ensures round-the-clock support with the precision and accountability that enterprise engagements demand.</p>
-                    <p>We don't just deliver projects. We build long-term partnerships, co-creating digital ecosystems that evolve with your business strategy and technology landscape.</p>
-                </div>
+          <div class="about-main">
+            <div class="section-head">
+              <span class="eyebrow">About us</span>
+              <h2>A technology partner built for the enterprise era</h2>
             </div>
-            <div class="values-grid grid-reveal">
-                <div class="value-card">
-                    <h3>Our Mission</h3>
-                    <p>Empower enterprises with transformative technology that creates lasting competitive advantage.</p>
-                </div>
-                <div class="value-card">
-                    <h3>Our Vision</h3>
-                    <p>To be the most trusted digital transformation partner for enterprises across every industry vertical.</p>
-                </div>
-                <div class="value-card">
-                    <h3>Our Values</h3>
-                    <p>Innovation-first thinking, quality engineering, transparent delivery, and client-centric excellence.</p>
-                </div>
+            <div class="about-content">
+              <p>
+                Kennen Technologies is a premier technology consulting and
+                digital transformation company built for the enterprise era. We
+                architect, build, and scale solutions that empower organisations
+                to compete in an AI-first, cloud-native world. From Fortune 500
+                enterprises to high-growth startups, our multidisciplinary teams
+                bring deep domain expertise and a relentless focus on measurable
+                outcomes.
+              </p>
+              <p>
+                Founded on the principles of innovation, agility, and quality,
+                we operate across the full spectrum of enterprise technology —
+                spanning AI &amp; machine learning, software and product
+                engineering, quality assurance, cloud infrastructure, ERP, CRM,
+                digital marketing, and workforce solutions. Our global delivery
+                model ensures round-the-clock support with the precision and
+                accountability that enterprise engagements demand.
+              </p>
+              <p>
+                We don't just deliver projects. We build long-term partnerships,
+                co-creating digital ecosystems that evolve with your business
+                strategy and technology landscape.
+              </p>
             </div>
+          </div>
+          <div class="values-grid grid-reveal">
+            <div class="value-card">
+              <h3>Our Mission</h3>
+              <p>
+                Empower enterprises with transformative technology that creates
+                lasting competitive advantage.
+              </p>
+            </div>
+            <div class="value-card">
+              <h3>Our Vision</h3>
+              <p>
+                To be the most trusted digital transformation partner for
+                enterprises across every industry vertical.
+              </p>
+            </div>
+            <div class="value-card">
+              <h3>Our Values</h3>
+              <p>
+                Innovation-first thinking, quality engineering, transparent
+                delivery, and client-centric excellence.
+              </p>
+            </div>
+          </div>
         </div>
-    </section>
+      </section>
 
-    <!-- Market Focus & Positioning Section -->
-    <section id="focus" class="focus section-feature">
+      <!-- Market Focus & Positioning Section -->
+      <section id="focus" class="focus section-feature">
         <div class="section-feature-bg" aria-hidden="true"></div>
         <div class="container">
-            <div class="section-head section-head--center">
-                <span class="eyebrow">Our focus</span>
-                <h2>Who we serve, and how we engage</h2>
-                <p class="section-subtitle">From micro-enterprises to large multinationals, Kennen Technologies engages as a long-term marketing and technology partner across the full enterprise growth lifecycle.</p>
-            </div>
+          <div class="section-head section-head--center">
+            <span class="eyebrow">Our focus</span>
+            <h2>Who we serve, and how we engage</h2>
+            <p class="section-subtitle">
+              From micro-enterprises to large multinationals, Kennen
+              Technologies engages as a long-term marketing and technology
+              partner across the full enterprise growth lifecycle.
+            </p>
+          </div>
 
-            <figure class="vision-statement">
-                <figcaption class="eyebrow">Enterprise business scope — vision</figcaption>
-                <blockquote>To become a strategic business transformation partner that enables organisations to accelerate digital innovation, operational excellence, AI adoption, and enterprise growth through quality engineering, intelligent automation, cybersecurity, analytics, and business consulting.</blockquote>
+          <figure class="vision-statement">
+            <figcaption class="eyebrow">
+              Enterprise business scope — vision
+            </figcaption>
+            <blockquote>
+              To become a strategic business transformation partner that enables
+              organisations to accelerate digital innovation, operational
+              excellence, AI adoption, and enterprise growth through quality
+              engineering, intelligent automation, cybersecurity, analytics, and
+              business consulting.
+            </blockquote>
+          </figure>
+
+          <div class="positioning">
+            <div class="positioning-head">
+              <span class="eyebrow">Positioning statement</span>
+              <h3>Enterprise assurance for service-led organisations</h3>
+              <ul class="tag-list tag-list--org">
+                <li>GCC</li>
+                <li>GBS</li>
+                <li>IT Services</li>
+                <li>ITeS</li>
+                <li>BPO</li>
+                <li>KPO</li>
+              </ul>
+            </div>
+            <div class="positioning-body">
+              <p>
+                Helping Global Capability Centers (GCCs), Global Business
+                Services (GBS), IT Services, ITeS, BPO, and KPO organisations
+                improve software quality, enterprise reliability, operational
+                efficiency, and digital transformation outcomes.
+              </p>
+              <ul class="capability-list">
+                <li>Quality Engineering</li>
+                <li>Test Automation</li>
+                <li>AI-driven Testing</li>
+                <li>Business Process Validation</li>
+                <li>Enterprise Platform Assurance</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Industries Section -->
+      <section id="industries" class="industries section-alt">
+        <div class="container">
+          <div class="section-head section-head--center">
+            <span class="eyebrow">Industries</span>
+            <h2>Built for every enterprise vertical</h2>
+            <p class="section-subtitle">
+              Kennen Technologies brings deep domain expertise across the
+              world's most complex and regulated industries, delivering tailored
+              solutions that address unique sector challenges at scale.
+            </p>
+          </div>
+          <div class="industries-grid grid-reveal">
+            <div class="industry-card">
+              <div class="industry-icon" aria-hidden="true">🏦</div>
+              <h3>Banking and Financial Services</h3>
+              <p>
+                Core banking modernisation, fraud detection AI, regulatory
+                compliance automation, and omnichannel digital banking
+                platforms.
+              </p>
+            </div>
+            <div class="industry-card">
+              <div class="industry-icon" aria-hidden="true">🏭</div>
+              <h3>Manufacturing and Industry 4.0</h3>
+              <p>
+                Smart factory solutions, predictive maintenance, IoT
+                integration, and real-time production analytics for modern
+                manufacturers.
+              </p>
+            </div>
+            <div class="industry-card">
+              <div class="industry-icon" aria-hidden="true">🏥</div>
+              <h3>Healthcare and Life Sciences</h3>
+              <p>
+                Patient data platforms, clinical workflow automation, AI
+                diagnostics support, and HIPAA-compliant cloud infrastructure.
+              </p>
+            </div>
+            <div class="industry-card">
+              <div class="industry-icon" aria-hidden="true">🛒</div>
+              <h3>Retail and E-Commerce</h3>
+              <p>
+                Personalisation engines, inventory intelligence, omnichannel
+                commerce platforms, and AI-powered customer journey
+                optimisation.
+              </p>
+            </div>
+            <div class="industry-card">
+              <div class="industry-icon" aria-hidden="true">🚚</div>
+              <h3>Supply Chain and Logistics</h3>
+              <p>
+                End-to-end supply chain visibility, demand forecasting,
+                warehouse automation, and last-mile delivery optimisation.
+              </p>
+            </div>
+            <div class="industry-card">
+              <div class="industry-icon" aria-hidden="true">📡</div>
+              <h3>Telecom and Technology</h3>
+              <p>
+                Network operations automation, OSS/BSS modernisation, customer
+                experience platforms, and 5G-ready cloud architectures.
+              </p>
+            </div>
+            <div class="industry-card">
+              <div class="industry-icon" aria-hidden="true">🚗</div>
+              <h3>Automotive</h3>
+              <p>
+                Connected vehicle platforms, EV software, and dealer management
+                systems.
+              </p>
+            </div>
+            <div class="industry-card">
+              <div class="industry-icon" aria-hidden="true">🏨</div>
+              <h3>Hospitality</h3>
+              <p>
+                Property management systems, guest experience AI, and revenue
+                optimisation.
+              </p>
+            </div>
+            <div class="industry-card">
+              <div class="industry-icon" aria-hidden="true">🎓</div>
+              <h3>Education</h3>
+              <p>
+                EdTech platforms, LMS, adaptive learning AI, and campus digital
+                transformation.
+              </p>
+            </div>
+            <div class="industry-card">
+              <div class="industry-icon" aria-hidden="true">🏛️</div>
+              <h3>Government</h3>
+              <p>
+                Digital public services, e-governance platforms, and citizen
+                data systems.
+              </p>
+            </div>
+          </div>
+
+          <div class="sectors">
+            <div class="sectors-head">
+              <h3>Sectors of engagement</h3>
+              <p>
+                In addition to the primary verticals mentioned above, our teams
+                provide services across a broader range of industry sectors.
+              </p>
+            </div>
+            <ul class="sector-list grid-reveal">
+              <li>BFSI</li>
+              <li>Insurance</li>
+              <li>Life Sciences</li>
+              <li>Power and Utilities (Energy)</li>
+              <li>eLearning</li>
+              <li>Real Estate and Property Management</li>
+              <li>Travel and Tourism</li>
+              <li>Media and Entertainment</li>
+              <li>Agritech</li>
+              <li>Food Tech</li>
+              <li>Deep Tech</li>
+              <li>Consumer Tech</li>
+              <li>Healthcare</li>
+              <li>Manufacturing</li>
+              <li>Retail</li>
+              <li>Power and Utilities (Energy)</li>
+              <li>eLearning</li>
+              <li>construction</li>
+              <li>Real Estate and Property Management</li>
+              <li>Travel and Tourism</li>
+              <li>Media and Entertainment</li>
+              <li>Electronic Goods</li>
+              <li>Machinery and Industrial Equipment</li>
+              <li>Petroleum and Energy, Crude</li>
+              <li>Chemicals</li>
+              <li>Non-Ferrous Metals and Metals</li>
+              <li>Plastics</li>
+              <li>Food and Edible Oils</li>
+              <li>Coal and Mining</li>
+              <li>Oil and Gas</li>
+              <li>Gold and Bullion, Gems and Jewellery</li>
+              <li>Vegetable Oils</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Services Section -->
+      <section id="services" class="services section-base">
+        <div class="container">
+          <div class="section-head">
+            <span class="eyebrow">Services</span>
+            <h2>Our service portfolio</h2>
+            <p class="section-subtitle">
+              A comprehensive suite of enterprise technology services engineered
+              to accelerate digital transformation, optimise operations, and
+              future-proof your technology investments.
+            </p>
+          </div>
+          <div class="services-grid grid-reveal">
+            <div class="service-card">
+              <span class="service-index" aria-hidden="true">01</span>
+              <h3>Software Development</h3>
+              <p>
+                Custom enterprise application development using modern
+                architectures — microservices, event-driven, and cloud-native —
+                built for scale and resilience.
+              </p>
+            </div>
+            <div class="service-card">
+              <span class="service-index" aria-hidden="true">02</span>
+              <h3>Quality Engineering</h3>
+              <p>
+                End-to-end QA with automation testing, API testing, performance
+                testing, and continuous quality integration across your SDLC
+                pipeline.
+              </p>
+            </div>
+            <div class="service-card">
+              <span class="service-index" aria-hidden="true">03</span>
+              <h3>AI Solutions</h3>
+              <p>
+                Enterprise-grade AI from strategy to deployment — LLMs,
+                generative AI, agentic AI, RAG pipelines, and conversational
+                intelligence platforms.
+              </p>
+            </div>
+            <div class="service-card">
+              <span class="service-index" aria-hidden="true">04</span>
+              <h3>Cloud and DevOps</h3>
+              <p>
+                Multi-cloud architecture, cloud migration, Kubernetes
+                orchestration, CI/CD pipeline engineering, and
+                infrastructure-as-code at enterprise scale.
+              </p>
+            </div>
+            <div class="service-card">
+              <span class="service-index" aria-hidden="true">05</span>
+              <h3>Data and Business Intelligence</h3>
+              <p>
+                Data engineering, modern data platforms, real-time analytics,
+                Power BI dashboards, and AI-powered business intelligence for
+                enterprise leaders.
+              </p>
+            </div>
+            <div class="service-card">
+              <span class="service-index" aria-hidden="true">06</span>
+              <h3>ERP and Enterprise Integration</h3>
+              <p>
+                SAP, Oracle, and Microsoft Dynamics consulting, CRM
+                implementation, and seamless enterprise application integration
+                across your technology ecosystem.
+              </p>
+            </div>
+            <div class="service-card">
+              <span class="service-index" aria-hidden="true">07</span>
+              <h3>Cyber Security</h3>
+              <p>
+                Zero-trust architecture, vulnerability assessment, penetration
+                testing, and enterprise-grade security operations centre (SOC)
+                services.
+              </p>
+            </div>
+            <div class="service-card">
+              <span class="service-index" aria-hidden="true">08</span>
+              <h3>Digital Marketing</h3>
+              <p>
+                Performance marketing, SEO/SEM, marketing automation, and
+                data-driven brand growth strategies for enterprise visibility.
+              </p>
+            </div>
+            <div class="service-card">
+              <span class="service-index" aria-hidden="true">09</span>
+              <h3>Workforce Solutions</h3>
+              <p>
+                Specialised technology recruitment, staff augmentation, and
+                managed workforce delivery across engineering and consulting
+                disciplines.
+              </p>
+            </div>
+            <div class="service-card">
+              <span class="service-index" aria-hidden="true">10</span>
+              <h3>Business Consulting</h3>
+              <p>
+                Digital strategy advisory, operating model transformation,
+                change management, and enterprise roadmap design for board-level
+                outcomes.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- AI Innovation Section -->
+      <section id="ai" class="ai-innovation section-feature">
+        <div class="section-feature-bg" aria-hidden="true"></div>
+        <div class="container">
+          <div class="section-head section-head--center">
+            <span class="eyebrow">AI practice</span>
+            <h2>Enterprise AI — built to scale</h2>
+            <p class="section-subtitle">
+              Kennen Technologies sits at the frontier of enterprise AI
+              adoption. Our dedicated AI practice combines research-grade
+              capabilities with production-ready engineering to deliver AI
+              systems that transform how enterprises operate, decide, and
+              compete.
+            </p>
+          </div>
+          <div class="ai-grid grid-reveal">
+            <div class="ai-card">
+              <h3>Large Language Models (LLMs)</h3>
+              <p>
+                Fine-tuning, deployment, and governance of LLMs including GPT-4,
+                Claude, Gemini, and open-source models for enterprise use cases.
+              </p>
+            </div>
+            <div class="ai-card">
+              <h3>RAG and Document Intelligence</h3>
+              <p>
+                Retrieval-augmented generation pipelines and intelligent
+                document processing that make your enterprise knowledge
+                instantly accessible.
+              </p>
+            </div>
+            <div class="ai-card">
+              <h3>Agentic AI and Automation</h3>
+              <p>
+                Multi-agent orchestration using CrewAI, AutoGen, and LangChain
+                to automate complex enterprise workflows end-to-end.
+              </p>
+            </div>
+            <div class="ai-card">
+              <h3>Predictive Analytics</h3>
+              <p>
+                ML-powered forecasting models that drive proactive
+                decision-making across operations, finance, supply chain, and
+                customer management.
+              </p>
+            </div>
+          </div>
+
+          <div class="ai-framework">
+            <div class="ai-framework-intro">
+              <h3>Our AI adoption framework</h3>
+              <p>
+                A structured path that reduces time-to-value and enterprise
+                risk, taking clients from strategy to scaled production
+                deployment with confidence and measurable ROI.
+              </p>
+            </div>
+            <ol class="ai-steps grid-reveal">
+              <li class="ai-step">
+                <span class="ai-step-num" aria-hidden="true">1</span>
+                <h4>AI Strategy</h4>
+                <p>Assess readiness and define the roadmap.</p>
+              </li>
+              <li class="ai-step">
+                <span class="ai-step-num" aria-hidden="true">2</span>
+                <h4>Model Development</h4>
+                <p>Build, fine-tune, and integrate models.</p>
+              </li>
+              <li class="ai-step">
+                <span class="ai-step-num" aria-hidden="true">3</span>
+                <h4>Production Deployment</h4>
+                <p>Operationalise models at enterprise scale.</p>
+              </li>
+              <li class="ai-step">
+                <span class="ai-step-num" aria-hidden="true">4</span>
+                <h4>Monitoring and Optimisation</h4>
+                <p>Continuously monitor, govern, and improve.</p>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- Why Choose Us Section -->
+      <section id="why-us" class="why-us section-base">
+        <div class="container">
+          <div class="section-head">
+            <span class="eyebrow">Why us</span>
+            <h2>The Kennen advantage</h2>
+            <p class="section-subtitle">
+              Enterprises choose Kennen Technologies not just for our technical
+              capabilities — but for our commitment to partnership,
+              accountability, and delivering outcomes that matter to your
+              business.
+            </p>
+          </div>
+          <div class="advantages-grid grid-reveal">
+            <div class="advantage-card">
+              <h3>Deep Enterprise Expertise</h3>
+              <p>
+                Serving large enterprises across industry verticals with
+                complex, mission-critical technology deployments that demand
+                zero-tolerance for failure.
+              </p>
+            </div>
+            <div class="advantage-card">
+              <h3>Innovation-First Mindset</h3>
+              <p>
+                We invest continuously in emerging technologies—AI,
+                quantum-ready architectures, and edge computing—so your
+                enterprise always stays ahead of the technology curve.
+              </p>
+            </div>
+            <div class="advantage-card">
+              <h3>Agile Delivery at Scale</h3>
+              <p>
+                Our scaled agile delivery model combines speed with
+                governance—enabling rapid iteration without compromising
+                enterprise-grade security, compliance, or quality standards.
+              </p>
+            </div>
+            <div class="advantage-card">
+              <h3>24×7 Global Support</h3>
+              <p>
+                Round-the-clock support across time zones with dedicated account
+                managers, escalation SLAs, and proactive monitoring to keep your
+                systems performing at peak levels.
+              </p>
+            </div>
+            <div class="advantage-card">
+              <h3>Certified Professionals</h3>
+              <p>
+                Certified engineers holding credentials from AWS, Microsoft,
+                Google Cloud, SAP, PMP, and leading AI platforms — ensuring
+                best-practice delivery on every engagement.
+              </p>
+            </div>
+            <div class="advantage-card">
+              <h3>Global Delivery Model</h3>
+              <p>
+                Onshore, nearshore, and offshore delivery centres operating in a
+                unified model that optimises cost, quality, and responsiveness
+                for enterprise engagements of any scale.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Stats Section -->
+      <section class="stats section-feature">
+        <div class="section-feature-bg" aria-hidden="true"></div>
+        <div class="container">
+          <div class="section-head section-head--center">
+            <span class="eyebrow">Outcomes</span>
+            <h2>Measurable impact, not just delivery</h2>
+          </div>
+          <div class="stats-grid grid-reveal">
+            <div class="stat-card">
+              <div class="stat-number">40%</div>
+              <div class="stat-label">Cost Reduction</div>
+              <p>
+                Average operational cost savings reported by enterprise clients
+                post-transformation.
+              </p>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">62%</div>
+              <div class="stat-label">Downtime Reduction</div>
+              <p>
+                Average improvement in system uptime through predictive AI and
+                DevOps practices.
+              </p>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">98%</div>
+              <div class="stat-label">On-Time Delivery</div>
+              <p>
+                Project delivery success rate across all enterprise engagements.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Client Success Section -->
+      <section class="client-success section-alt">
+        <div class="container">
+          <div class="section-head section-head--center">
+            <span class="eyebrow">Client success</span>
+            <h2>What our clients say</h2>
+            <p class="section-subtitle">
+              Enterprise leaders across industries trust Kennen Technologies to
+              deliver transformative outcomes. Here is what they have to say
+              about partnering with us.
+            </p>
+          </div>
+          <div class="testimonials-grid grid-reveal">
+            <figure class="testimonial-card">
+              <blockquote>
+                Kennen Technologies transformed our core banking platform in 1
+                months — a project we thought would take five years. Their
+                AI-powered automation reduced our operational costs by 40% and
+                dramatically improved our customer NPS scores.
+              </blockquote>
+              <figcaption class="testimonial-author">
+                <span class="avatar" aria-hidden="true">CT</span>
+                <span
+                  ><strong>Chief Technology Officer</strong>Leading Private
+                  Sector Bank</span
+                >
+              </figcaption>
             </figure>
-
-            <div class="positioning">
-                <div class="positioning-head">
-                    <span class="eyebrow">Positioning statement</span>
-                    <h3>Enterprise assurance for service-led organisations</h3>
-                    <ul class="tag-list tag-list--org">
-                        <li>GCC</li>
-                        <li>GBS</li>
-                        <li>IT Services</li>
-                        <li>ITeS</li>
-                        <li>BPO</li>
-                        <li>KPO</li>
-                    </ul>
-                </div>
-                <div class="positioning-body">
-                    <p>Helping Global Capability Centers (GCCs), Global Business Services (GBS), IT Services, ITeS, BPO, and KPO organisations improve software quality, enterprise reliability, operational efficiency, and digital transformation outcomes.</p>
-                    <ul class="capability-list">
-                        <li>Quality Engineering</li>
-                        <li>Test Automation</li>
-                        <li>AI-driven Testing</li>
-                        <li>Business Process Validation</li>
-                        <li>Enterprise Platform Assurance</li>
-                    </ul>
-                </div>
-            </div>
+            <figure class="testimonial-card">
+              <blockquote>
+                The predictive maintenance solution Kennen deployed on our
+                manufacturing floor reduced unplanned downtime by 62%. Their
+                team's domain knowledge in Industry 4.0 was exceptional — they
+                understood our challenges before we even fully articulated them.
+              </blockquote>
+              <figcaption class="testimonial-author">
+                <span class="avatar" aria-hidden="true">VP</span>
+                <span
+                  ><strong>VP of Operations</strong>Global Automotive
+                  Manufacturer</span
+                >
+              </figcaption>
+            </figure>
+            <figure class="testimonial-card">
+              <blockquote>
+                From cloud migration to AI adoption strategy, Kennen has been an
+                end-to-end partner for our digital transformation journey. Their
+                quality engineering practice ensured zero-defect releases across
+                consecutive production deployments.
+              </blockquote>
+              <figcaption class="testimonial-author">
+                <span class="avatar" aria-hidden="true">HD</span>
+                <span
+                  ><strong>Head of Digital Transformation</strong>Healthcare and
+                  Life Sciences Enterprise</span
+                >
+              </figcaption>
+            </figure>
+          </div>
         </div>
-    </section>
+      </section>
 
-    <!-- Industries Section -->
-    <section id="industries" class="industries section-alt">
+      <!-- Insights Section -->
+      <section class="insights section-base">
         <div class="container">
-            <div class="section-head section-head--center">
-                <span class="eyebrow">Industries</span>
-                <h2>Built for every enterprise vertical</h2>
-                <p class="section-subtitle">Kennen Technologies brings deep domain expertise across the world's most complex and regulated industries, delivering tailored solutions that address unique sector challenges at scale.</p>
-            </div>
-            <div class="industries-grid grid-reveal">
-                <div class="industry-card">
-                    <div class="industry-icon" aria-hidden="true">🏦</div>
-                    <h3>Banking &amp; Financial Services</h3>
-                    <p>Core banking modernisation, fraud detection AI, regulatory compliance automation, and omnichannel digital banking platforms.</p>
-                </div>
-                <div class="industry-card">
-                    <div class="industry-icon" aria-hidden="true">🏭</div>
-                    <h3>Manufacturing &amp; Industry 4.0</h3>
-                    <p>Smart factory solutions, predictive maintenance, IoT integration, and real-time production analytics for modern manufacturers.</p>
-                </div>
-                <div class="industry-card">
-                    <div class="industry-icon" aria-hidden="true">🏥</div>
-                    <h3>Healthcare &amp; Life Sciences</h3>
-                    <p>Patient data platforms, clinical workflow automation, AI diagnostics support, and HIPAA-compliant cloud infrastructure.</p>
-                </div>
-                <div class="industry-card">
-                    <div class="industry-icon" aria-hidden="true">🛒</div>
-                    <h3>Retail &amp; E-Commerce</h3>
-                    <p>Personalisation engines, inventory intelligence, omnichannel commerce platforms, and AI-powered customer journey optimisation.</p>
-                </div>
-                <div class="industry-card">
-                    <div class="industry-icon" aria-hidden="true">🚚</div>
-                    <h3>Supply Chain &amp; Logistics</h3>
-                    <p>End-to-end supply chain visibility, demand forecasting, warehouse automation, and last-mile delivery optimisation.</p>
-                </div>
-                <div class="industry-card">
-                    <div class="industry-icon" aria-hidden="true">📡</div>
-                    <h3>Telecom &amp; Technology</h3>
-                    <p>Network operations automation, OSS/BSS modernisation, customer experience platforms, and 5G-ready cloud architectures.</p>
-                </div>
-                <div class="industry-card">
-                    <div class="industry-icon" aria-hidden="true">🚗</div>
-                    <h3>Automotive</h3>
-                    <p>Connected vehicle platforms, EV software, and dealer management systems.</p>
-                </div>
-                <div class="industry-card">
-                    <div class="industry-icon" aria-hidden="true">🏨</div>
-                    <h3>Hospitality</h3>
-                    <p>Property management systems, guest experience AI, and revenue optimisation.</p>
-                </div>
-                <div class="industry-card">
-                    <div class="industry-icon" aria-hidden="true">🎓</div>
-                    <h3>Education</h3>
-                    <p>EdTech platforms, LMS, adaptive learning AI, and campus digital transformation.</p>
-                </div>
-                <div class="industry-card">
-                    <div class="industry-icon" aria-hidden="true">🏛️</div>
-                    <h3>Government</h3>
-                    <p>Digital public services, e-governance platforms, and citizen data systems.</p>
-                </div>
-            </div>
-
-            <div class="sectors">
-                <div class="sectors-head">
-                    <h3>Sectors of engagement</h3>
-                    <p>In addition to the primary verticals mentioned above, our teams provide services across a broader range of industry sectors.</p>
-                </div>
-                <ul class="sector-list grid-reveal">
-                    <li>BFSI</li>
-                    <li>Insurance</li>
-                    <li>Life Sciences</li>
-                    <li>Power &amp; Utilities (Energy)</li>
-                    <li>eLearning</li>
-                    <li>Real Estate &amp; Property Management</li>
-                    <li>Travel &amp; Tourism</li>
-                    <li>Media &amp; Entertainment</li>
-                    <li>Agritech</li>
-                    <li>Food Tech</li>
-                    <li>Deep Tech</li>
-                    <li>Consumer Tech</li>
-                    <li>Healthcare</li>
-                    <li>Manufacturing</li>
-                    <li>Retail</li>
-                    <li>Power & Utilities (Energy)</li>
-                    <li>eLearning</li>
-                    <li>construction</li>
-                    <li>Real Estate and Property Management</li>
-                    <li>Travel & Tourism</li>
-                    <li>Media & Entertainment</li>
-                    <li>Electronic Goods</li>
-                    <li>Machinery and Industrial Equipment</li>
-                    <li>Petroleum and Energy, Crude</li>
-                    <li>Chemicals</li>
-                    <li>Non-Ferrous Metals and Metals</li>
-                    <li>Plastics</li>
-                    <li>Food and Edible Oils</li>
-                    <li>Coal and Mining</li>
-                    <li>Oil and Gas</li>
-                    <li>Gold and Bullion, Gems and Jewellery</li>
-                    <li>Vegetable Oils</li>
-                </ul>
-            </div>
+          <div class="section-head">
+            <span class="eyebrow">Insights</span>
+            <h2>From our knowledge hub</h2>
+            <p class="section-subtitle">
+              Stay ahead of the technology curve with expert perspectives from
+              Kennen's practitioners on AI, cloud, enterprise architecture, and
+              digital transformation strategy.
+            </p>
+          </div>
+          <div class="insights-grid grid-reveal">
+            <article class="insight-card">
+              <span class="insight-category">AI and Innovation</span>
+              <h3>
+                The Enterprise AI Adoption Playbook: From Pilot to Production at
+                Scale
+              </h3>
+              <p>
+                Moving beyond AI proof-of-concept to enterprise-wide deployment
+                requires a structured framework. Discover the five critical
+                success factors that separate AI leaders from laggards in 2025.
+              </p>
+              <span class="insight-link" aria-hidden="true"
+                >Read insight →</span
+              >
+            </article>
+            <article class="insight-card">
+              <span class="insight-category">Cloud and DevOps</span>
+              <h3>
+                Multi-Cloud Strategy in 2025: Avoiding Vendor Lock-In Without
+                Sacrificing Performance
+              </h3>
+              <p>
+                A pragmatic guide for enterprise architects on designing
+                cloud-agnostic architectures that maximise resilience, cost
+                efficiency, and portability across AWS, Azure, and GCP.
+              </p>
+              <span class="insight-link" aria-hidden="true"
+                >Read insight →</span
+              >
+            </article>
+            <article class="insight-card">
+              <span class="insight-category">Digital Strategy</span>
+              <h3>
+                The Future of Enterprise Digital Transformation: Trends to Watch
+                in 2025
+              </h3>
+              <p>
+                Explore the key technology trends shaping enterprise digital
+                transformation initiatives and how organisations can prepare for
+                the next wave of innovation.
+              </p>
+              <span class="insight-link" aria-hidden="true"
+                >Read insight →</span
+              >
+            </article>
+          </div>
         </div>
-    </section>
+      </section>
 
-    <!-- Services Section -->
-    <section id="services" class="services section-base">
+      <!-- Contact Section -->
+      <section id="contact" class="contact section-alt">
         <div class="container">
-            <div class="section-head">
-                <span class="eyebrow">Services</span>
-                <h2>Our service portfolio</h2>
-                <p class="section-subtitle">A comprehensive suite of enterprise technology services engineered to accelerate digital transformation, optimise operations, and future-proof your technology investments.</p>
+          <div class="contact-content">
+            <div class="contact-info">
+              <span class="eyebrow">Contact</span>
+              <h2>Ready to transform your enterprise?</h2>
+              <p class="contact-lead">
+                Let's discuss how Kennen Technologies can accelerate your
+                digital transformation journey.
+              </p>
+              <ul class="contact-list">
+                <li>
+                  <span class="contact-label">Email</span>
+                  <a href="mailto:contact@kennen-technologies.com"
+                    >contact@kennen-technologies.com</a
+                  >
+                </li>
+                <li>
+                  <span class="contact-label">Phone</span>
+                  <a href="tel:+919834246817">+91 9834246817</a>
+                </li>
+                <li>
+                  <span class="contact-label">Address</span>
+                  <span>Pune, Maharashtra, India</span>
+                </li>
+                <li>
+                  <span class="contact-label">Website</span>
+                  <a href="https://www.kennen-technologies.com"
+                    >www.kennen-technologies.com</a
+                  >
+                </li>
+              </ul>
             </div>
-            <div class="services-grid grid-reveal">
-                <div class="service-card">
-                    <span class="service-index" aria-hidden="true">01</span>
-                    <h3>Software Development</h3>
-                    <p>Custom enterprise application development using modern architectures — microservices, event-driven, and cloud-native — built for scale and resilience.</p>
+            <div class="contact-form">
+              <form novalidate>
+                <div class="form-group">
+                  <label for="name"
+                    >Your Name <span aria-label="required">*</span></label
+                  >
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Jane Doe"
+                    required
+                    aria-required="true"
+                    aria-invalid="false"
+                  />
                 </div>
-                <div class="service-card">
-                    <span class="service-index" aria-hidden="true">02</span>
-                    <h3>Quality Engineering</h3>
-                    <p>End-to-end QA with automation testing, API testing, performance testing, and continuous quality integration across your SDLC pipeline.</p>
+                <div class="form-group">
+                  <label for="email"
+                    >Your Email <span aria-label="required">*</span></label
+                  >
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="jane@company.com"
+                    required
+                    aria-required="true"
+                    aria-invalid="false"
+                  />
                 </div>
-                <div class="service-card">
-                    <span class="service-index" aria-hidden="true">03</span>
-                    <h3>AI Solutions</h3>
-                    <p>Enterprise-grade AI from strategy to deployment — LLMs, generative AI, agentic AI, RAG pipelines, and conversational intelligence platforms.</p>
+                <div class="form-group">
+                  <label for="company">Company Name</label>
+                  <input
+                    type="text"
+                    id="company"
+                    name="company"
+                    placeholder="Company Inc."
+                    aria-invalid="false"
+                  />
                 </div>
-                <div class="service-card">
-                    <span class="service-index" aria-hidden="true">04</span>
-                    <h3>Cloud &amp; DevOps</h3>
-                    <p>Multi-cloud architecture, cloud migration, Kubernetes orchestration, CI/CD pipeline engineering, and infrastructure-as-code at enterprise scale.</p>
+                <div class="form-group">
+                  <label for="phone">
+                    Phone Number<span aria-label="required">*</span>
+                  </label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    placeholder="Phone Number"
+                    required
+                    aria-required="true"
+                    aria-invalid="false"
+                  />
                 </div>
-                <div class="service-card">
-                    <span class="service-index" aria-hidden="true">05</span>
-                    <h3>Data &amp; Business Intelligence</h3>
-                    <p>Data engineering, modern data platforms, real-time analytics, Power BI dashboards, and AI-powered business intelligence for enterprise leaders.</p>
+                <div class="form-group">
+                  <label for="engagement">Enterprise Engagement <span aria-label="required">*</span></label>
+                  <select
+                    id="engagement"
+                    name="engagement"
+                    required
+                    aria-required="true"
+                    aria-invalid="false"
+                  >
+                    <option value="" disabled selected>Select Engagement Type</option>
+                    <option value="investor-relations">Investor Relations – I would like to explore investment opportunities and discussions</option>
+                    <option value="potential-customer">Potential Customer – I would like to discuss my business requirements</option>
+                    <option value="strategic-partner">Strategic and Channel Partner – I would like to explore a partnership opportunity to distribute and sell any kind of products or services</option>
+                    <option value="enterprise-consulting">Enterprise Consulting – I would like to discuss a business transformation initiative</option>
+                    <option value="talent-transformation">Talent Transformation – I would like to discuss workforce and talent development opportunities</option>
+                    <option value="job-seeker">Job Seeker – I am interested in career and employment opportunities</option>
+                    <option value="training-placement">Training and Placement Partner – I am interested in training, upskilling and placement opportunities</option>
+                    <option value="freelance-consultant">Freelancer or Consultant – I am interested in freelance or consulting opportunities</option>
+                    <option value="academic-industry-partnership">Academic and Industry Partnership – I would like to explore collaboration opportunities</option>
+                    <option value="saas-development">SaaS Development</option>
+                    <option value="digital-commerce-ecommerce">Digital Commerce and E-Commerce Solutions</option>
+                    <option value="design-thinking-product-development">Design Thinking in Product Development</option>
+                    <option value="enterprise-platforms-partnership">Enterprise Platforms Partnership</option>
+                    <option value="infrastructure-managed-services">Infrastructure Managed Services</option>
+                    <option value="digital-marketing-services">Digital Marketing Services</option>
+                    <option value="enterprise-creative-content">Enterprise Creative Content Strategy and Production</option>
+                    <option value="cybersecurity-risk-assurance">Cybersecurity and Identity Access Management, Risk Assurance</option>
+                    <option value="ai-agents-multi-agent-systems">AI Agents and Multi-Agent Systems Development</option>
+                    <option value="ai-research-development">AI Research and Development Labs Partnership</option>
+                  </select>
                 </div>
-                <div class="service-card">
-                    <span class="service-index" aria-hidden="true">06</span>
-                    <h3>ERP &amp; Enterprise Integration</h3>
-                    <p>SAP, Oracle, and Microsoft Dynamics consulting, CRM implementation, and seamless enterprise application integration across your technology ecosystem.</p>
+                <div class="form-group">
+                  <label for="message"
+                    >Your Message <span aria-label="required">*</span></label
+                  >
+                  <textarea
+                    id="message"
+                    name="message"
+                    placeholder="Tell us about your transformation goals"
+                    rows="5"
+                    required
+                    aria-required="true"
+                    aria-invalid="false"
+                  ></textarea>
                 </div>
-                <div class="service-card">
-                    <span class="service-index" aria-hidden="true">07</span>
-                    <h3>Cyber Security</h3>
-                    <p>Zero-trust architecture, vulnerability assessment, penetration testing, and enterprise-grade security operations centre (SOC) services.</p>
-                </div>
-                <div class="service-card">
-                    <span class="service-index" aria-hidden="true">08</span>
-                    <h3>Digital Marketing</h3>
-                    <p>Performance marketing, SEO/SEM, marketing automation, and data-driven brand growth strategies for enterprise visibility.</p>
-                </div>
-                <div class="service-card">
-                    <span class="service-index" aria-hidden="true">09</span>
-                    <h3>Workforce Solutions</h3>
-                    <p>Specialised technology recruitment, staff augmentation, and managed workforce delivery across engineering and consulting disciplines.</p>
-                </div>
-                <div class="service-card">
-                    <span class="service-index" aria-hidden="true">10</span>
-                    <h3>Business Consulting</h3>
-                    <p>Digital strategy advisory, operating model transformation, change management, and enterprise roadmap design for board-level outcomes.</p>
-                </div>
+                <button type="submit" class="btn btn-primary btn-block">
+                  Send Message
+                </button>
+                <div
+                  id="form-status"
+                  class="form-status"
+                  role="status"
+                  aria-live="polite"
+                  aria-atomic="true"
+                ></div>
+              </form>
             </div>
+          </div>
         </div>
-    </section>
-
-    <!-- AI Innovation Section -->
-    <section id="ai" class="ai-innovation section-feature">
-        <div class="section-feature-bg" aria-hidden="true"></div>
-        <div class="container">
-            <div class="section-head section-head--center">
-                <span class="eyebrow">AI practice</span>
-                <h2>Enterprise AI — built to scale</h2>
-                <p class="section-subtitle">Kennen Technologies sits at the frontier of enterprise AI adoption. Our dedicated AI practice combines research-grade capabilities with production-ready engineering to deliver AI systems that transform how enterprises operate, decide, and compete.</p>
-            </div>
-            <div class="ai-grid grid-reveal">
-                <div class="ai-card">
-                    <h3>Large Language Models (LLMs)</h3>
-                    <p>Fine-tuning, deployment, and governance of LLMs including GPT-4, Claude, Gemini, and open-source models for enterprise use cases.</p>
-                </div>
-                <div class="ai-card">
-                    <h3>RAG &amp; Document Intelligence</h3>
-                    <p>Retrieval-augmented generation pipelines and intelligent document processing that make your enterprise knowledge instantly accessible.</p>
-                </div>
-                <div class="ai-card">
-                    <h3>Agentic AI &amp; Automation</h3>
-                    <p>Multi-agent orchestration using CrewAI, AutoGen, and LangChain to automate complex enterprise workflows end-to-end.</p>
-                </div>
-                <div class="ai-card">
-                    <h3>Predictive Analytics</h3>
-                    <p>ML-powered forecasting models that drive proactive decision-making across operations, finance, supply chain, and customer management.</p>
-                </div>
-            </div>
-
-            <div class="ai-framework">
-                <div class="ai-framework-intro">
-                    <h3>Our AI adoption framework</h3>
-                    <p>A structured path that reduces time-to-value and enterprise risk, taking clients from strategy to scaled production deployment with confidence and measurable ROI.</p>
-                </div>
-                <ol class="ai-steps grid-reveal">
-                    <li class="ai-step">
-                        <span class="ai-step-num" aria-hidden="true">1</span>
-                        <h4>AI Strategy</h4>
-                        <p>Assess readiness and define the roadmap.</p>
-                    </li>
-                    <li class="ai-step">
-                        <span class="ai-step-num" aria-hidden="true">2</span>
-                        <h4>Model Development</h4>
-                        <p>Build, fine-tune, and integrate models.</p>
-                    </li>
-                    <li class="ai-step">
-                        <span class="ai-step-num" aria-hidden="true">3</span>
-                        <h4>Production Deployment</h4>
-                        <p>Operationalise models at enterprise scale.</p>
-                    </li>
-                    <li class="ai-step">
-                        <span class="ai-step-num" aria-hidden="true">4</span>
-                        <h4>Monitoring &amp; Optimisation</h4>
-                        <p>Continuously monitor, govern, and improve.</p>
-                    </li>
-                </ol>
-            </div>
-        </div>
-    </section>
-
-    <!-- Why Choose Us Section -->
-    <section id="why-us" class="why-us section-base">
-        <div class="container">
-            <div class="section-head">
-                <span class="eyebrow">Why us</span>
-                <h2>The Kennen advantage</h2>
-                <p class="section-subtitle">Enterprises choose Kennen Technologies not just for our technical capabilities — but for our commitment to partnership, accountability, and delivering outcomes that matter to your business.</p>
-            </div>
-            <div class="advantages-grid grid-reveal">
-                <div class="advantage-card">
-                    <h3>Deep Enterprise Expertise</h3>
-                    <p>Serving large enterprises across industry verticals with complex, mission-critical technology deployments that demand zero-tolerance for failure.</p>
-                </div>
-                <div class="advantage-card">
-                    <h3>Innovation-First Mindset</h3>
-                    <p>We invest continuously in emerging technologies—AI, quantum-ready architectures, and edge computing—so your enterprise always stays ahead of the technology curve.</p>
-                </div>
-                <div class="advantage-card">
-                    <h3>Agile Delivery at Scale</h3>
-                    <p>Our scaled agile delivery model combines speed with governance—enabling rapid iteration without compromising enterprise-grade security, compliance, or quality standards.</p>
-                </div>
-                <div class="advantage-card">
-                    <h3>24×7 Global Support</h3>
-                    <p>Round-the-clock support across time zones with dedicated account managers, escalation SLAs, and proactive monitoring to keep your systems performing at peak levels.</p>
-                </div>
-                <div class="advantage-card">
-                    <h3>Certified Professionals</h3>
-                    <p>Certified engineers holding credentials from AWS, Microsoft, Google Cloud, SAP, PMP, and leading AI platforms — ensuring best-practice delivery on every engagement.</p>
-                </div>
-                <div class="advantage-card">
-                    <h3>Global Delivery Model</h3>
-                    <p>Onshore, nearshore, and offshore delivery centres operating in a unified model that optimises cost, quality, and responsiveness for enterprise engagements of any scale.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Stats Section -->
-    <section class="stats section-feature">
-        <div class="section-feature-bg" aria-hidden="true"></div>
-        <div class="container">
-            <div class="section-head section-head--center">
-                <span class="eyebrow">Outcomes</span>
-                <h2>Measurable impact, not just delivery</h2>
-            </div>
-            <div class="stats-grid grid-reveal">
-                <div class="stat-card">
-                    <div class="stat-number">40%</div>
-                    <div class="stat-label">Cost Reduction</div>
-                    <p>Average operational cost savings reported by enterprise clients post-transformation.</p>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">62%</div>
-                    <div class="stat-label">Downtime Reduction</div>
-                    <p>Average improvement in system uptime through predictive AI and DevOps practices.</p>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">98%</div>
-                    <div class="stat-label">On-Time Delivery</div>
-                    <p>Project delivery success rate across all enterprise engagements.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Client Success Section -->
-    <section class="client-success section-alt">
-        <div class="container">
-            <div class="section-head section-head--center">
-                <span class="eyebrow">Client success</span>
-                <h2>What our clients say</h2>
-                <p class="section-subtitle">Enterprise leaders across industries trust Kennen Technologies to deliver transformative outcomes. Here is what they have to say about partnering with us.</p>
-            </div>
-            <div class="testimonials-grid grid-reveal">
-                <figure class="testimonial-card">
-                    <blockquote>Kennen Technologies transformed our core banking platform in 1 months — a project we thought would take five years. Their AI-powered automation reduced our operational costs by 40% and dramatically improved our customer NPS scores.</blockquote>
-                    <figcaption class="testimonial-author">
-                        <span class="avatar" aria-hidden="true">CT</span>
-                        <span><strong>Chief Technology Officer</strong>Leading Private Sector Bank</span>
-                    </figcaption>
-                </figure>
-                <figure class="testimonial-card">
-                    <blockquote>The predictive maintenance solution Kennen deployed on our manufacturing floor reduced unplanned downtime by 62%. Their team's domain knowledge in Industry 4.0 was exceptional — they understood our challenges before we even fully articulated them.</blockquote>
-                    <figcaption class="testimonial-author">
-                        <span class="avatar" aria-hidden="true">VP</span>
-                        <span><strong>VP of Operations</strong>Global Automotive Manufacturer</span>
-                    </figcaption>
-                </figure>
-                <figure class="testimonial-card">
-                    <blockquote>From cloud migration to AI adoption strategy, Kennen has been an end-to-end partner for our digital transformation journey. Their quality engineering practice ensured zero-defect releases across consecutive production deployments.</blockquote>
-                    <figcaption class="testimonial-author">
-                        <span class="avatar" aria-hidden="true">HD</span>
-                        <span><strong>Head of Digital Transformation</strong>Healthcare &amp; Life Sciences Enterprise</span>
-                    </figcaption>
-                </figure>
-            </div>
-        </div>
-    </section>
-
-    <!-- Insights Section -->
-    <section class="insights section-base">
-        <div class="container">
-            <div class="section-head">
-                <span class="eyebrow">Insights</span>
-                <h2>From our knowledge hub</h2>
-                <p class="section-subtitle">Stay ahead of the technology curve with expert perspectives from Kennen's practitioners on AI, cloud, enterprise architecture, and digital transformation strategy.</p>
-            </div>
-            <div class="insights-grid grid-reveal">
-                <article class="insight-card">
-                    <span class="insight-category">AI &amp; Innovation</span>
-                    <h3>The Enterprise AI Adoption Playbook: From Pilot to Production at Scale</h3>
-                    <p>Moving beyond AI proof-of-concept to enterprise-wide deployment requires a structured framework. Discover the five critical success factors that separate AI leaders from laggards in 2025.</p>
-                    <span class="insight-link" aria-hidden="true">Read insight →</span>
-                </article>
-                <article class="insight-card">
-                    <span class="insight-category">Cloud &amp; DevOps</span>
-                    <h3>Multi-Cloud Strategy in 2025: Avoiding Vendor Lock-In Without Sacrificing Performance</h3>
-                    <p>A pragmatic guide for enterprise architects on designing cloud-agnostic architectures that maximise resilience, cost efficiency, and portability across AWS, Azure, and GCP.</p>
-                    <span class="insight-link" aria-hidden="true">Read insight →</span>
-                </article>
-                <article class="insight-card">
-                    <span class="insight-category">Digital Strategy</span>
-                    <h3>The Future of Enterprise Digital Transformation: Trends to Watch in 2025</h3>
-                    <p>Explore the key technology trends shaping enterprise digital transformation initiatives and how organisations can prepare for the next wave of innovation.</p>
-                    <span class="insight-link" aria-hidden="true">Read insight →</span>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact section-alt">
-        <div class="container">
-            <div class="contact-content">
-                <div class="contact-info">
-                    <span class="eyebrow">Contact</span>
-                    <h2>Ready to transform your enterprise?</h2>
-                    <p class="contact-lead">Let's discuss how Kennen Technologies can accelerate your digital transformation journey.</p>
-                    <ul class="contact-list">
-                        <li>
-                            <span class="contact-label">Email</span>
-                            <a href="mailto:contact@kennen-technologies.com">contact@kennen-technologies.com</a>
-                        </li>
-                        <li>
-                            <span class="contact-label">Phone</span>
-                            <a href="tel:+919834246817">+91 9834246817</a>
-                        </li>
-                        <li>
-                            <span class="contact-label">Address</span>
-                            <span>Pune, Maharashtra, India</span>
-                        </li>
-                        <li>
-                            <span class="contact-label">Website</span>
-                            <a href="https://www.kennen-technologies.com">www.kennen-technologies.com</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="contact-form">
-                    <form novalidate>
-                        <div class="form-group">
-                            <label for="name">Your Name <span aria-label="required">*</span></label>
-                            <input type="text" id="name" name="name" placeholder="Jane Doe" required aria-required="true" aria-invalid="false">
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Your Email <span aria-label="required">*</span></label>
-                            <input type="email" id="email" name="email" placeholder="jane@company.com" required aria-required="true" aria-invalid="false">
-                        </div>
-                        <div class="form-group">
-                            <label for="company">Company Name</label>
-                            <input type="text" id="company" name="company" placeholder="Company Inc." aria-invalid="false">
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Your Message <span aria-label="required">*</span></label>
-                            <textarea id="message" name="message" placeholder="Tell us about your transformation goals" rows="5" required aria-required="true" aria-invalid="false"></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-block">Send Message</button>
-                        <div id="form-status" class="form-status" role="status" aria-live="polite" aria-atomic="true"></div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
+      </section>
     </main>
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <!-- <div class="footer-section footer-brand">
+      <div class="container">
+        <div class="footer-content">
+          <!-- <div class="footer-section footer-brand">
                     <span class="nav-mark" aria-hidden="true">K</span>
                     <h3>Kennen Technologies</h3>
                     <p>Your end-to-end digital transformation partner for enterprise growth and Revamping Businesses. Transforming Talent. Accelerating Enterprise Growth through Technology, Innovation, and AI-Driven Quality Engineering.</p>
                 </div> -->
-                <div class="footer-section">
-                                    <h4>Company</h4>
-                                    <ul>
-                                        <li><a href="#about">About Us</a></li>
-                                        <li><a href="#why-us">Why Choose Us</a></li>
-                                        <li><a href="#why-us">Talent Transformation</a></li>
-                                        <li><a href="#contact">Contact</a></li>
-                                        <li><a href="#careers">Careers</a></li>
-                                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Industries</h4>
-                    <ul>
-                        <li><a href="#industries">Financial Services and Fintech</a></li>
-                        <li><a href="#industries">Healthcare</a></li>
-                        <li><a href="#industries">Manufacturing</a></li>
-                        <li><a href="#industries">Aviation and Airlines</a></li>
-                        <li><a href="#industries">Retail</a></li>
-                        <li><a href="#industries">Life Science and Pharmaceutical</a></li>
-                        <li><a href="#industries">Logistics, Supply Chain and Warehousing</a></li>
-                        <li><a href="#industries">Oil and Gas</a></li>
-                        <li><a href="#industries">Insurance</a></li>
-                        <li><a href="#industries">Real Estate and Property Management</a></li>
-                        <li><a href="#industries">Travel and Tourism</a></li>
-                        <li><a href="#industries">Petroleum and Energy, Crude</a></li>
-                        <li><a href="#industries">Gold and Bullion, Gems and Jewellery</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Services</h4>
-                    <ul>
-                        <li><a href="#services">SaaS Development</a></li>
-                        <li><a href="#services">Digital Commerce and E-Commerce Solutions</a></li>
-                        <li><a href="#services">Design Thinking in Product Development</a></li>
-                        <li><a href="#services">Enterprise Platforms</a></li>
-                        <li><a href="#services">Audit,Risk,Business Advisory</a></li>
-                        <li><a href="#services">Investment Banking</a></li>
-                        <li><a href="#services">Asset Management</a></li>
-                        <li><a href="#services">Infrastructure Managed Services</a></li>
-                        <li><a href="#services">Digital Marketing Services</a></li>
-                        <li><a href="#services">Enterprise Creative Content Strategy and Production</a></li>
-                        <li><a href="#services">Cybersecurity and Risk Assurance</a></li>
-                        <li><a href="#services">Seva Operator - Digital Services</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>AI Solutions</h4>
-                    <ul>
-                        <li><a href="#services">Generative AI Strategy and Consulting</a></li>
-                        <li><a href="#services">AI Agents and Multi-Agent Systems</a></li>
-                        <li><a href="#services">Agentic AI Solutions</a></li>
-                        <li><a href="#services">Enterprise AI Platforms and Design Thinking</a></li>
-                        <li><a href="#services">AI Research and Development Labs</a></li>
-                        <li><a href="#services">Data and Decision Intelligence Advisory</a></li>
-                        <li><a href="#services">AI Governance, Risk and Compliance (AI GRC)</a></li>
-                        <!-- <li><a href="#services">Audit, Risk and Business Advisory</a></li> -->
-                        <li><a href="#services">Cybersecurity and Risk Assurance</a></li>
-                        <li><a href="#services">Infrastructure and Managed Services</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Kennen Technologies. All rights reserved.</p>
-                <p><a href="mailto:contact@kennen-technologies.com">contact@kennen-technologies.com</a></p>
-            </div>
+          <div class="footer-section">
+            <h4>Company</h4>
+            <ul>
+              <li><a href="#about">About Us</a></li>
+              <li><a href="#why-us">Why Choose Us</a></li>
+              <li><a href="#why-us">Talent Transformation</a></li>
+              <li><a href="#contact">Contact</a></li>
+              <li><a href="#careers">Careers</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h4>Industries</h4>
+            <ul>
+              <li><a href="#industries">Financial Services and Fintech</a></li>
+              <li><a href="#industries">Healthcare</a></li>
+              <li><a href="#industries">Manufacturing</a></li>
+              <li><a href="#industries">Aviation and Airlines</a></li>
+              <li><a href="#industries">Retail</a></li>
+              <li><a href="#industries">Life Science and Pharmaceutical</a></li>
+              <li>
+                <a href="#industries"
+                  >Logistics, Supply Chain and Warehousing</a
+                >
+              </li>
+              <li><a href="#industries">Oil and Gas</a></li>
+              <li><a href="#industries">Insurance</a></li>
+              <li>
+                <a href="#industries">Real Estate and Property Management</a>
+              </li>
+              <li><a href="#industries">Travel and Tourism</a></li>
+              <li><a href="#industries">Media and Entertainment</a></li>
+              <li><a href="#industries">Petroleum and Energy, Crude</a></li>
+              <li>
+                <a href="#industries">Gold and Bullion, Gems and Jewellery</a>
+              </li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h4>Services</h4>
+            <ul>
+              <li><a href="#services">SaaS Development</a></li>
+              <li>
+                <a href="#services"
+                  >Digital Commerce and E-Commerce Solutions</a
+                >
+              </li>
+              <li>
+                <a href="#services">Design Thinking in Product Development</a>
+              </li>
+              <li><a href="#services">Enterprise Platforms</a></li>
+              <li><a href="#services">Audit,Risk,Business Advisory</a></li>
+              <li><a href="#services">Investment Banking</a></li>
+              <li><a href="#services">Asset Management</a></li>
+              <li><a href="#services">Digital Marketing Services</a></li>
+              <li>
+                <a href="#services"
+                  >Enterprise Creative Content Strategy and Production</a
+                >
+              </li>
+              <li><a href="#services">Cybersecurity and Risk Assurance</a></li>
+              <li><a href="#services">Seva Operator - Digital Services</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h4>AI Solutions</h4>
+            <ul>
+              <li>
+                <a href="#services">Generative AI Strategy and Consulting</a>
+              </li>
+              <li><a href="#services">AI Agents and Multi-Agent Systems</a></li>
+              <li><a href="#services">Agentic AI Solutions</a></li>
+              <li>
+                <a href="#services"
+                  >Enterprise AI Platforms and Design Thinking</a
+                >
+              </li>
+              <li><a href="#services">AI Research and Development Labs</a></li>
+              <li>
+                <a href="#services">Data and Decision Intelligence Advisory</a>
+              </li>
+              <li>
+                <a href="#services"
+                  >AI Governance, Risk and Compliance (AI GRC)</a
+                >
+              </li>
+              <li>
+                <a href="#services">Infrastructure and Managed Services</a>
+              </li>
+            </ul>
+          </div>
         </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 Kennen Technologies. All rights reserved.</p>
+          <p>
+            <a href="mailto:contact@kennen-technologies.com"
+              >contact@kennen-technologies.com</a
+            >
+          </p>
+          <button class="scroll-up" aria-label="Back to top" title="Back to top" type="button">↑</button>
+        </div>
+      </div>
     </footer>
 
     <script src="script.js?v=2"></script>
-</body>
+  </body>
 </html>
+
+<!-- Deploy trigger commit for Vercel -->
