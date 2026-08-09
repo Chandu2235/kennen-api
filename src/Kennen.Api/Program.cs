@@ -257,10 +257,13 @@ app.UseCors(CorsSettings.PolicyName);
 app.UseResponseCaching();
 app.UseRateLimiter();
 
-// Static admin SPA is served from wwwroot/admin under the /admin route. The assets
-// contain no secrets; all data endpoints are protected by JWT. The client itself
-// reroutes to the login view when no token is present.
+// Static marketing site is served from wwwroot/ at the root route, and the admin
+// SPA is served from wwwroot/admin/ under /admin. The client assets contain no
+// secrets; all data endpoints are protected by JWT.
 var adminFiles = new PhysicalFileProvider(adminRoot);
+
+app.UseDefaultFiles();
+app.UseStaticFiles();
 
 app.UseDefaultFiles(new DefaultFilesOptions
 {
