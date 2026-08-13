@@ -14,7 +14,7 @@ namespace Kennen.Api.Controllers;
 [Route("api/content")]
 [AllowAnonymous]
 [Produces("application/json")]
-[ResponseCache(Duration = 300, Location = ResponseCacheLocation.Any)]
+[ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any, VaryByQueryKeys = new[] { "*" })]
 public class ContentController : ControllerBase
 {
     private readonly KennenDbContext _db;
