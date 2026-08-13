@@ -78,7 +78,16 @@ nav a:hover, nav a.active { background: var(--panel-2); color: var(--text); }
 
 .content-section { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 1rem; margin-bottom: 1rem; }
 .content-section h3 { margin: 0 0 0.5rem; display: flex; justify-content: space-between; align-items: center; }
-.content-section .items { padding-left: 1rem; color: var(--muted); font-size: 0.9rem; }
-.content-section .items li { margin: 0.25rem 0; }
+.content-section .items { list-style: none; padding: 0; margin: 0.5rem 0; color: var(--text); font-size: 0.9rem; }
+.content-section .items li { display: flex; align-items: center; gap: 0.5rem; padding: 0.35rem 0; border-bottom: 1px solid var(--border); }
+.content-section .items li small { color: var(--muted); }
+.content-section .content-actions { display: flex; gap: 0.5rem; margin-top: 0.75rem; flex-wrap: wrap; }
+.content-heading { margin: 1.75rem 0 0.75rem; font-size: 1.25rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+
+.btn-icon { background: transparent; border: 1px solid var(--border); color: var(--text); border-radius: 4px; cursor: pointer; padding: 0.1rem 0.4rem; font-size: 0.85rem; line-height: 1; }
+.btn-icon:hover { background: var(--panel-2); }
 
 .error { color: var(--danger); margin-top: 0.75rem; font-size: 0.85rem; }
+
+.modal label:has(input[type="checkbox"]) { display: flex; align-items: center; gap: 0.5rem; margin-top: 1rem; }
+.modal input[type="checkbox"] { width: auto; }

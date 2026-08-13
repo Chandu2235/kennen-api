@@ -269,18 +269,322 @@
   // ---------------------------------------------------------------------------
   async function loadContent() {
     try {
-      const sections = await api('/api/admin/content/sections');
+      const [sections, stats, testimonials] = await Promise.all([
+        api('/api/admin/content/sections'),
+        api('/api/admin/content/stats'),
+        api('/api/admin/content/testimonials')
+      ]);
       const list = document.getElementById('content-list');
-      list.innerHTML = sections.map(s => `
-        <div class="content-section">
-          <h3>
-            <span>${escape(s.eyebrow)}: ${escape(s.heading)} <small>(${s.key})</small></span>
-            <span class="badge" style="background:${s.isPublished ? '#22c55e33' : ''};color:${s.isPublished ? '#22c55e' : '#888'}">${s.isPublished ? 'Published' : 'Draft'}</span>
-          </h3>
-          <p style="color:var(--muted);margin-top:0.25rem">${s.items.length} items</p>
-          <ul class="items">${s.items.map(i => `<li>${escape(i.title)} ${i.isPublished ? '' : '<small>(draft)</small>'}</li>`).join('')}</ul>
-        </div>`).join('');
+      list.innerHTML = `
+        <div class="filters">
+          <button id="new-section" class="btn-primary">+ New section</button>
+          <button id="new-stat" class="btn-secondary">+ Stat</button>
+          <button id="new-testimonial" class="btn-secondary">+ Testimonial</button>
+          <button id="refresh-content" class="btn-secondary">Refresh</button>
+        </div>
+
+        <h2 class="content-heading">Sections</h2>
+        <div id="sections-list">${renderSectionList(sections)}</div>
+
+        <h2 class="content-heading">Stats</h2>
+        <table class="data-table" id="stats-table">
+          <thead><tr><th>Value</th><th>Label</th><th>Description</th><th>Order</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody>${(stats || []).map(s => `
+            <tr>
+              <td>${escape(s.value)}</td>
+              <td>${escape(s.label)}</td>
+              <td>${escape(s.description) || '—'}</td>
+              <td>${s.displayOrder}</td>
+              <td><span class="badge" style="background:${s.isPublished ? '#22c55e33' : ''};color:${s.isPublished ? '#22c55e' : '#888'}">${s.isPublished ? 'Published' : 'Draft'}</span></td>
+              <td>
+                <button class="btn-secondary" data-id="${s.id}" data-action="edit-stat">Edit</button>
+                <button class="btn-danger" data-id="${s.id}" data-action="delete-stat">Delete</button>
+              </td>
+            </tr>`).join('')}</tbody>
+        </table>
+
+        <h2 class="content-heading">Testimonials</h2>
+        <table class="data-table" id="testimonials-table">
+          <thead><tr><th>Initials</th><th>Title</th><th>Organisation</th><th>Order</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody>${(testimonials || []).map(t => `
+            <tr>
+              <td>${escape(t.authorInitials)}</td>
+              <td>${escape(t.authorTitle)}</td>
+              <td>${escape(t.organisation)}</td>
+              <td>${t.displayOrder}</td>
+              <td><span class="badge" style="background:${t.isPublished ? '#22c55e33' : ''};color:${t.isPublished ? '#22c55e' : '#888'}">${t.isPublished ? 'Published' : 'Draft'}</span></td>
+              <td>
+                <button class="btn-secondary" data-id="${t.id}" data-action="edit-testimonial">Edit</button>
+                <button class="btn-danger" data-id="${t.id}" data-action="delete-testimonial">Delete</button>
+              </td>
+            </tr>`).join('')}</tbody>
+        </table>`;
+
+      attachContentHandlers(sections);
     } catch (err) { setGlobalError(err.message); }
+  }
+
+  function renderSectionList(sections) {
+    return (sections || []).map(s => `
+      <div class="content-section" data-id="${s.id}">
+        <h3>
+          <span>${escape(s.eyebrow)}: ${escape(s.heading)} <small>(${s.key})</small></span>
+          <span class="badge" style="background:${s.isPublished ? '#22c55e33' : ''};color:${s.isPublished ? '#22c55e' : '#888'}">${s.isPublished ? 'Published' : 'Draft'}</span>
+        </h3>
+        <p style="color:var(--muted);margin-top:0.25rem">${s.items.length} items · order ${s.displayOrder}</p>
+        <ul class="items">${(s.items || []).map(i => `
+          <li data-item-id="${i.id}">
+            ${escape(i.title)} ${i.isPublished ? '' : '<small>(draft)</small>'}
+            <button class="btn-icon" data-action="edit-item" data-item-id="${i.id}" data-section-id="${s.id}" title="Edit">✎</button>
+            <button class="btn-icon" data-action="delete-item" data-item-id="${i.id}" title="Delete">×</button>
+          </li>`).join('')}</ul>
+        <div class="content-actions">
+          <button class="btn-secondary" data-action="edit-section" data-id="${s.id}">Edit section</button>
+          <button class="btn-secondary" data-action="add-item" data-id="${s.id}">+ Add item</button>
+          <button class="btn-danger" data-action="delete-section" data-id="${s.id}">Delete section</button>
+        </div>
+      </div>`).join('');
+  }
+
+  function attachContentHandlers(sections) {
+    document.getElementById('refresh-content')?.addEventListener('click', loadContent);
+    document.getElementById('new-section')?.addEventListener('click', () => openSectionModal());
+    document.getElementById('new-stat')?.addEventListener('click', () => openStatModal());
+    document.getElementById('new-testimonial')?.addEventListener('click', () => openTestimonialModal());
+
+    document.getElementById('sections-list')?.querySelectorAll('button[data-action]').forEach(b =>
+      b.addEventListener('click', () => {
+        const action = b.dataset.action;
+        const id = b.dataset.id;
+        if (action === 'edit-section') editSection(id, sections);
+        if (action === 'delete-section') deleteSection(id);
+        if (action === 'add-item') addItem(id);
+      }));
+
+    document.getElementById('sections-list')?.querySelectorAll('li button[data-action]').forEach(b =>
+      b.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const action = b.dataset.action;
+        const itemId = b.dataset.itemId;
+        const sectionId = b.dataset.sectionId;
+        if (action === 'edit-item') editItem(itemId, sectionId, sections);
+        if (action === 'delete-item') deleteItem(itemId);
+      }));
+
+    document.getElementById('stats-table')?.querySelectorAll('button[data-action]').forEach(b =>
+      b.addEventListener('click', () => {
+        const action = b.dataset.action;
+        const id = b.dataset.id;
+        if (action === 'edit-stat') editStat(id);
+        if (action === 'delete-stat') deleteStat(id);
+      }));
+
+    document.getElementById('testimonials-table')?.querySelectorAll('button[data-action]').forEach(b =>
+      b.addEventListener('click', () => {
+        const action = b.dataset.action;
+        const id = b.dataset.id;
+        if (action === 'edit-testimonial') editTestimonial(id);
+        if (action === 'delete-testimonial') deleteTestimonial(id);
+      }));
+  }
+
+  async function editSection(id, sections) {
+    const s = (sections || []).find(x => x.id === id);
+    if (!s) return;
+    openModal(`
+      <h2>Edit section</h2>
+      <label for="c-key">Key</label><input id="c-key" type="text" value="${escape(s.key)}" readonly>
+      <label for="c-eyebrow">Eyebrow</label><input id="c-eyebrow" type="text" value="${escape(s.eyebrow)}">
+      <label for="c-heading">Heading</label><input id="c-heading" type="text" value="${escape(s.heading)}">
+      <label for="c-desc">Description</label><textarea id="c-desc" rows="4">${escape(s.description || '')}</textarea>
+      <label for="c-order">Display order</label><input id="c-order" type="number" value="${s.displayOrder}">
+      <label for="c-published"><input type="checkbox" id="c-published" ${s.isPublished ? 'checked' : ''}> Published</label>
+      <div class="actions">
+        <button class="btn-primary" id="save-section">Save</button>
+        <button class="btn-secondary close">Cancel</button>
+      </div>`, () => {});
+
+    document.getElementById('save-section').addEventListener('click', async () => {
+      const payload = {
+        key: document.getElementById('c-key').value.trim(),
+        eyebrow: document.getElementById('c-eyebrow').value.trim(),
+        heading: document.getElementById('c-heading').value.trim(),
+        description: document.getElementById('c-desc').value.trim() || null,
+        displayOrder: parseInt(document.getElementById('c-order').value || '0', 10),
+        isPublished: document.getElementById('c-published').checked
+      };
+      try { await api('/api/admin/content/sections/' + id, { method: 'PUT', body: payload }); document.getElementById('modal').style.display = 'none'; loadContent(); }
+      catch (err) { setGlobalError(err.message); }
+    });
+  }
+
+  function openSectionModal(existing) {
+    const isEdit = !!existing;
+    openModal(`
+      <h2>${isEdit ? 'Edit section' : 'New section'}</h2>
+      <label for="c-key">Key</label><input id="c-key" type="text" value="${isEdit ? escape(existing.key) : ''}" ${isEdit ? 'readonly' : ''}>
+      <label for="c-eyebrow">Eyebrow</label><input id="c-eyebrow" type="text" value="${isEdit ? escape(existing.eyebrow) : ''}">
+      <label for="c-heading">Heading</label><input id="c-heading" type="text" value="${isEdit ? escape(existing.heading) : ''}">
+      <label for="c-desc">Description</label><textarea id="c-desc" rows="4">${isEdit ? escape(existing.description || '') : ''}</textarea>
+      <label for="c-order">Display order</label><input id="c-order" type="number" value="${isEdit ? existing.displayOrder : '0'}">
+      <label for="c-published"><input type="checkbox" id="c-published" ${!isEdit || existing.isPublished ? 'checked' : ''}> Published</label>
+      <div class="actions">
+        <button class="btn-primary" id="save-section">Save</button>
+        <button class="btn-secondary close">Cancel</button>
+      </div>`);
+    const id = isEdit ? existing.id : '';
+    const method = isEdit ? 'PUT' : 'POST';
+    const path = isEdit ? '/api/admin/content/sections/' + id : '/api/admin/content/sections';
+    document.getElementById('save-section').addEventListener('click', async () => {
+      const payload = {
+        key: document.getElementById('c-key').value.trim(),
+        eyebrow: document.getElementById('c-eyebrow').value.trim(),
+        heading: document.getElementById('c-heading').value.trim(),
+        description: document.getElementById('c-desc').value.trim() || null,
+        displayOrder: parseInt(document.getElementById('c-order').value || '0', 10),
+        isPublished: document.getElementById('c-published').checked
+      };
+      try { await api(path, { method, body: payload }); document.getElementById('modal').style.display = 'none'; loadContent(); }
+      catch (err) { setGlobalError(err.message); }
+    });
+  }
+
+  async function deleteSection(id) {
+    if (!confirm('Delete this section and all its items?')) return;
+    try { await api('/api/admin/content/sections/' + id, { method: 'DELETE' }); loadContent(); }
+    catch (err) { setGlobalError(err.message); }
+  }
+
+  async function addItem(sectionId) {
+    openItemModal(sectionId);
+  }
+
+  async function editItem(itemId, sectionId, sections) {
+    const section = (sections || []).find(s => s.id === sectionId);
+    const item = section && (section.items || []).find(i => i.id === itemId);
+    if (!item) return;
+    openItemModal(sectionId, item);
+  }
+
+  function openItemModal(sectionId, item) {
+    const isEdit = !!item;
+    openModal(`
+      <h2>${isEdit ? 'Edit item' : 'Add item'}</h2>
+      <label for="i-title">Title</label><input id="i-title" type="text" value="${isEdit ? escape(item.title) : ''}">
+      <label for="i-summary">Summary</label><textarea id="i-summary" rows="4">${isEdit ? escape(item.summary || '') : ''}</textarea>
+      <label for="i-icon">Icon / number (optional, e.g. 01 or emoji)</label><input id="i-icon" type="text" value="${isEdit ? escape(item.icon || '') : ''}">
+      <label for="i-order">Display order</label><input id="i-order" type="number" value="${isEdit ? item.displayOrder : '0'}">
+      <label for="i-published"><input type="checkbox" id="i-published" ${!isEdit || item.isPublished ? 'checked' : ''}> Published</label>
+      <div class="actions">
+        <button class="btn-primary" id="save-item">Save</button>
+        <button class="btn-secondary close">Cancel</button>
+      </div>`);
+    const id = isEdit ? item.id : '';
+    const method = isEdit ? 'PUT' : 'POST';
+    const path = isEdit ? '/api/admin/content/items/' + id : '/api/admin/content/sections/' + sectionId + '/items';
+    document.getElementById('save-item').addEventListener('click', async () => {
+      const payload = {
+        title: document.getElementById('i-title').value.trim(),
+        summary: document.getElementById('i-summary').value.trim() || null,
+        icon: document.getElementById('i-icon').value.trim() || null,
+        displayOrder: parseInt(document.getElementById('i-order').value || '0', 10),
+        isPublished: document.getElementById('i-published').checked
+      };
+      try { await api(path, { method, body: payload }); document.getElementById('modal').style.display = 'none'; loadContent(); }
+      catch (err) { setGlobalError(err.message); }
+    });
+  }
+
+  async function deleteItem(id) {
+    if (!confirm('Delete this item?')) return;
+    try { await api('/api/admin/content/items/' + id, { method: 'DELETE' }); loadContent(); }
+    catch (err) { setGlobalError(err.message); }
+  }
+
+  async function editStat(id) {
+    let stat;
+    try { stat = await api('/api/admin/content/stats'); stat = (stat || []).find(s => s.id === id); } catch (err) { return setGlobalError(err.message); }
+    if (!stat) return;
+    openStatModal(stat);
+  }
+
+  function openStatModal(stat) {
+    const isEdit = !!stat;
+    openModal(`
+      <h2>${isEdit ? 'Edit stat' : 'New stat'}</h2>
+      <label for="s-value">Value (e.g. 40%)</label><input id="s-value" type="text" value="${isEdit ? escape(stat.value) : ''}">
+      <label for="s-label">Label</label><input id="s-label" type="text" value="${isEdit ? escape(stat.label) : ''}">
+      <label for="s-desc">Description</label><textarea id="s-desc" rows="3">${isEdit ? escape(stat.description || '') : ''}</textarea>
+      <label for="s-order">Display order</label><input id="s-order" type="number" value="${isEdit ? stat.displayOrder : '0'}">
+      <label for="s-published"><input type="checkbox" id="s-published" ${!isEdit || stat.isPublished ? 'checked' : ''}> Published</label>
+      <div class="actions">
+        <button class="btn-primary" id="save-stat">Save</button>
+        <button class="btn-secondary close">Cancel</button>
+      </div>`);
+    const id = isEdit ? stat.id : '';
+    const method = isEdit ? 'PUT' : 'POST';
+    const path = isEdit ? '/api/admin/content/stats/' + id : '/api/admin/content/stats';
+    document.getElementById('save-stat').addEventListener('click', async () => {
+      const payload = {
+        value: document.getElementById('s-value').value.trim(),
+        label: document.getElementById('s-label').value.trim(),
+        description: document.getElementById('s-desc').value.trim() || null,
+        displayOrder: parseInt(document.getElementById('s-order').value || '0', 10),
+        isPublished: document.getElementById('s-published').checked
+      };
+      try { await api(path, { method, body: payload }); document.getElementById('modal').style.display = 'none'; loadContent(); }
+      catch (err) { setGlobalError(err.message); }
+    });
+  }
+
+  async function deleteStat(id) {
+    if (!confirm('Delete this stat?')) return;
+    try { await api('/api/admin/content/stats/' + id, { method: 'DELETE' }); loadContent(); }
+    catch (err) { setGlobalError(err.message); }
+  }
+
+  async function editTestimonial(id) {
+    let list;
+    try { list = await api('/api/admin/content/testimonials'); list = (list || []).find(t => t.id === id); } catch (err) { return setGlobalError(err.message); }
+    if (!list) return;
+    openTestimonialModal(list);
+  }
+
+  function openTestimonialModal(t) {
+    const isEdit = !!t;
+    openModal(`
+      <h2>${isEdit ? 'Edit testimonial' : 'New testimonial'}</h2>
+      <label for="t-quote">Quote</label><textarea id="t-quote" rows="5">${isEdit ? escape(t.quote) : ''}</textarea>
+      <label for="t-initials">Author initials</label><input id="t-initials" type="text" value="${isEdit ? escape(t.authorInitials) : ''}">
+      <label for="t-title">Author title</label><input id="t-title" type="text" value="${isEdit ? escape(t.authorTitle) : ''}">
+      <label for="t-org">Organisation</label><input id="t-org" type="text" value="${isEdit ? escape(t.organisation) : ''}">
+      <label for="t-order">Display order</label><input id="t-order" type="number" value="${isEdit ? t.displayOrder : '0'}">
+      <label for="t-published"><input type="checkbox" id="t-published" ${!isEdit || t.isPublished ? 'checked' : ''}> Published</label>
+      <div class="actions">
+        <button class="btn-primary" id="save-testimonial">Save</button>
+        <button class="btn-secondary close">Cancel</button>
+      </div>`);
+    const id = isEdit ? t.id : '';
+    const method = isEdit ? 'PUT' : 'POST';
+    const path = isEdit ? '/api/admin/content/testimonials/' + id : '/api/admin/content/testimonials';
+    document.getElementById('save-testimonial').addEventListener('click', async () => {
+      const payload = {
+        quote: document.getElementById('t-quote').value.trim(),
+        authorInitials: document.getElementById('t-initials').value.trim(),
+        authorTitle: document.getElementById('t-title').value.trim(),
+        organisation: document.getElementById('t-org').value.trim(),
+        displayOrder: parseInt(document.getElementById('t-order').value || '0', 10),
+        isPublished: document.getElementById('t-published').checked
+      };
+      try { await api(path, { method, body: payload }); document.getElementById('modal').style.display = 'none'; loadContent(); }
+      catch (err) { setGlobalError(err.message); }
+    });
+  }
+
+  async function deleteTestimonial(id) {
+    if (!confirm('Delete this testimonial?')) return;
+    try { await api('/api/admin/content/testimonials/' + id, { method: 'DELETE' }); loadContent(); }
+    catch (err) { setGlobalError(err.message); }
   }
 
   // ---------------------------------------------------------------------------
