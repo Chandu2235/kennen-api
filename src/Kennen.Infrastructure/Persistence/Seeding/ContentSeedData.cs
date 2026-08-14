@@ -78,6 +78,26 @@ internal static class ContentSeedData
                 ("24x7 Global Support", "Round-the-clock support across time zones with dedicated account managers, escalation SLAs, and proactive monitoring to keep your systems performing at peak levels.", null),
                 ("Certified Professionals", "Certified engineers holding credentials from AWS, Microsoft, Google Cloud, SAP, PMP, and leading AI platforms - ensuring best-practice delivery on every engagement.", null),
                 ("Global Delivery Model", "Onshore, nearshore, and offshore delivery centres operating in a unified model that optimises cost, quality, and responsiveness for enterprise engagements of any scale.", null)
+            }),
+
+        Section("qa-testing-hero", "QA & Testing", "Enterprise quality engineering for mission-critical systems",
+            "Kennen Technologies delivers end-to-end quality assurance and testing services that reduce risk, accelerate release cycles, and ensure your enterprise applications perform flawlessly across complex, regulated environments.",
+            order: 6,
+            items: Array.Empty<(string Title, string Summary, string? Icon)>()),
+
+        Section("qa-testing", "Industry Domain Experience", "Deep domain assurance across every vertical",
+            "Our QA and testing practice brings real-world experience across the most regulated and transaction-heavy industries. We understand the compliance, security, and performance standards your sector demands.",
+            order: 7,
+            items: new[]
+            {
+                ("Payments & Finance", "Deep expertise in payment gateway testing, financial transactions, and compliance validation across Mastercard and Global Payments projects.", (string?)null),
+                ("E-Commerce", "Comprehensive testing of online retail platforms, checkout flows, inventory management, and customer experience optimization.", null),
+                ("Supply Chain", "Quality assurance for logistics systems, warehouse management, and distribution tracking applications.", null),
+                ("Insurance", "Testing insurance policy management systems, claims processing, and regulatory compliance features.", null),
+                ("Life Sciences", "Validation of healthcare applications, ensuring data integrity and regulatory compliance in medical software.", null),
+                ("Automotive", "Testing automotive software solutions, connected vehicle platforms, and dealership management systems.", null),
+                ("Hospitality", "Quality assurance for hotel management systems, booking platforms, and guest experience applications.", null),
+                ("Banking & ERP", "Testing enterprise resource planning systems and core banking applications with focus on data security.", null)
             })
     };
 
