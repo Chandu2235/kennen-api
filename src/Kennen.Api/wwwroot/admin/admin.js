@@ -589,6 +589,155 @@
   }
 
   // ---------------------------------------------------------------------------
+  // Pricing
+  // ---------------------------------------------------------------------------
+  async function loadPricing() {
+    try {
+      const plans = await api('/api/admin/pricing/plans');
+      const list = document.getElementById('pricing-list');
+      list.innerHTML = `
+        <div class="filters">
+          <button id="new-pricing-plan" class="btn-primary">+ New plan</button>
+          <button id="refresh-pricing" class="btn-secondary">Refresh</button>
+        </div>
+        <div id="pricing-plans-list">${renderPlanList(plans)}</div>`;
+
+      document.getElementById('refresh-pricing')?.addEventListener('click', loadPricing);
+      document.getElementById('new-pricing-plan')?.addEventListener('click', () => openPlanModal());
+      document.getElementById('pricing-plans-list')?.querySelectorAll('button[data-action]').forEach(b =>
+        b.addEventListener('click', () => {
+          const action = b.dataset.action;
+          const id = b.dataset.id;
+          const planId = b.dataset.planId;
+          if (action === 'edit-plan') editPlan(id);
+          if (action === 'delete-plan') deletePlan(id);
+          if (action === 'add-feature') addFeature(planId);
+          if (action === 'edit-feature') editFeature(id, planId, plans);
+          if (action === 'delete-feature') deleteFeature(id);
+        }));
+    } catch (err) { setGlobalError(err.message); }
+  }
+
+  function renderPlanList(plans) {
+    return (plans || []).map(p => `
+      <div class="content-section" data-id="${p.id}">
+        <h3>
+          <span>${escape(p.name)} <small>(${p.slug})</small></span>
+          <span>
+            <span class="badge" style="background:${p.isPublished ? '#22c55e33' : ''};color:${p.isPublished ? '#22c55e' : '#888'}">${p.isPublished ? 'Published' : 'Draft'}</span>
+            ${p.isFeatured ? '<span class="badge" style="background:#eab30833;color:#eab308">Featured</span>' : ''}
+          </span>
+        </h3>
+        <p style="color:var(--muted);margin-top:0.25rem">${p.price}${p.billingPeriod || ''} · ${p.features.length} features · order ${p.displayOrder}</p>
+        <ul class="items">${(p.features || []).map(f => `
+          <li data-feature-id="${f.id}">
+            ${escape(f.text)} ${f.isPublished ? '' : '<small>(draft)</small>'}
+            <button class="btn-icon" data-action="edit-feature" data-id="${f.id}" data-plan-id="${p.id}" title="Edit">✎</button>
+            <button class="btn-icon" data-action="delete-feature" data-id="${f.id}" title="Delete">×</button>
+          </li>`).join('')}</ul>
+        <div class="content-actions">
+          <button class="btn-secondary" data-action="edit-plan" data-id="${p.id}">Edit plan</button>
+          <button class="btn-secondary" data-action="add-feature" data-plan-id="${p.id}">+ Add feature</button>
+          <button class="btn-danger" data-action="delete-plan" data-id="${p.id}">Delete plan</button>
+        </div>
+      </div>`).join('');
+  }
+
+  async function editPlan(id) {
+    let plan;
+    try { plan = (await api('/api/admin/pricing/plans')).find(p => p.id === id); } catch (err) { return setGlobalError(err.message); }
+    if (!plan) return;
+    openPlanModal(plan);
+  }
+
+  function openPlanModal(plan) {
+    const isEdit = !!plan;
+    openModal(`
+      <h2>${isEdit ? 'Edit plan' : 'New plan'}</h2>
+      <label for="p-slug">Slug</label><input id="p-slug" type="text" value="${isEdit ? escape(plan.slug) : ''}" ${isEdit ? 'readonly' : ''}>
+      <label for="p-name">Name</label><input id="p-name" type="text" value="${isEdit ? escape(plan.name) : ''}">
+      <label for="p-subtitle">Subtitle</label><input id="p-subtitle" type="text" value="${isEdit ? escape(plan.subtitle || '') : ''}">
+      <label for="p-price">Price</label><input id="p-price" type="text" value="${isEdit ? escape(plan.price) : ''}">
+      <label for="p-billing">Billing period</label><input id="p-billing" type="text" value="${isEdit ? escape(plan.billingPeriod || '') : ''}">
+      <label for="p-desc">Description</label><textarea id="p-desc" rows="3">${isEdit ? escape(plan.description || '') : ''}</textarea>
+      <label for="p-order">Display order</label><input id="p-order" type="number" value="${isEdit ? plan.displayOrder : '0'}">
+      <label for="p-featured"><input type="checkbox" id="p-featured" ${isEdit && plan.isFeatured ? 'checked' : ''}> Featured</label>
+      <label for="p-published"><input type="checkbox" id="p-published" ${!isEdit || plan.isPublished ? 'checked' : ''}> Published</label>
+      <div class="actions">
+        <button class="btn-primary" id="save-plan">Save</button>
+        <button class="btn-secondary close">Cancel</button>
+      </div>`);
+    const id = isEdit ? plan.id : '';
+    const method = isEdit ? 'PUT' : 'POST';
+    const path = isEdit ? '/api/admin/pricing/plans/' + id : '/api/admin/pricing/plans';
+    document.getElementById('save-plan').addEventListener('click', async () => {
+      const payload = {
+        slug: document.getElementById('p-slug').value.trim(),
+        name: document.getElementById('p-name').value.trim(),
+        subtitle: document.getElementById('p-subtitle').value.trim() || null,
+        price: document.getElementById('p-price').value.trim(),
+        billingPeriod: document.getElementById('p-billing').value.trim() || null,
+        description: document.getElementById('p-desc').value.trim() || null,
+        displayOrder: parseInt(document.getElementById('p-order').value || '0', 10),
+        isFeatured: document.getElementById('p-featured').checked,
+        isPublished: document.getElementById('p-published').checked
+      };
+      try { await api(path, { method, body: payload }); document.getElementById('modal').style.display = 'none'; loadPricing(); }
+      catch (err) { setGlobalError(err.message); }
+    });
+  }
+
+  async function deletePlan(id) {
+    if (!confirm('Delete this plan and all its features?')) return;
+    try { await api('/api/admin/pricing/plans/' + id, { method: 'DELETE' }); loadPricing(); }
+    catch (err) { setGlobalError(err.message); }
+  }
+
+  async function addFeature(planId) {
+    openFeatureModal(planId);
+  }
+
+  async function editFeature(featureId, planId, plans) {
+    const plan = (plans || []).find(p => p.id === planId);
+    const feature = plan && (plan.features || []).find(f => f.id === featureId);
+    if (!feature) return;
+    openFeatureModal(planId, feature);
+  }
+
+  function openFeatureModal(planId, feature) {
+    const isEdit = !!feature;
+    openModal(`
+      <h2>${isEdit ? 'Edit feature' : 'Add feature'}</h2>
+      <label for="f-text">Feature text</label><input id="f-text" type="text" value="${isEdit ? escape(feature.text) : ''}">
+      <label for="f-icon">Icon (optional, e.g. ✓)</label><input id="f-icon" type="text" value="${isEdit ? escape(feature.icon || '') : ''}">
+      <label for="f-order">Display order</label><input id="f-order" type="number" value="${isEdit ? feature.displayOrder : '0'}">
+      <label for="f-published"><input type="checkbox" id="f-published" ${!isEdit || feature.isPublished ? 'checked' : ''}> Published</label>
+      <div class="actions">
+        <button class="btn-primary" id="save-feature">Save</button>
+        <button class="btn-secondary close">Cancel</button>
+      </div>`);
+    const id = isEdit ? feature.id : '';
+    const method = isEdit ? 'PUT' : 'POST';
+    const path = isEdit ? '/api/admin/pricing/features/' + id : '/api/admin/pricing/plans/' + planId + '/features';
+    document.getElementById('save-feature').addEventListener('click', async () => {
+      const payload = {
+        text: document.getElementById('f-text').value.trim(),
+        icon: document.getElementById('f-icon').value.trim() || null,
+        displayOrder: parseInt(document.getElementById('f-order').value || '0', 10),
+        isPublished: document.getElementById('f-published').checked
+      };
+      try { await api(path, { method, body: payload }); document.getElementById('modal').style.display = 'none'; loadPricing(); }
+      catch (err) { setGlobalError(err.message); }
+    });
+  }
+
+  async function deleteFeature(id) {
+    if (!confirm('Delete this feature?')) return;
+    try { await api('/api/admin/pricing/features/' + id, { method: 'DELETE' }); loadPricing(); }
+    catch (err) { setGlobalError(err.message); }
+  }
+
+  // ---------------------------------------------------------------------------
   // Careers
   // ---------------------------------------------------------------------------
   async function loadJobs() {
@@ -690,91 +839,6 @@
 
   document.getElementById('app-search').addEventListener('input', debounce(() => { state.applications.search = document.getElementById('app-search').value; state.applications.page = 1; loadApplications(); }, 300));
   document.getElementById('app-refresh').addEventListener('click', () => loadApplications());
-
-  // ---------------------------------------------------------------------------
-  // Pricing
-  // ---------------------------------------------------------------------------
-  async function loadPricing() {
-    try {
-      const plans = await api('/api/admin/content/pricing');
-      const list = document.getElementById('pricing-list');
-      list.innerHTML = `
-        <table class="data-table">
-          <thead>
-            <tr><th>Order</th><th>Name</th><th>Price</th><th>Period</th><th>Features</th><th>Popular</th><th>Status</th><th>Actions</th></tr>
-          </thead>
-          <tbody>
-            ${(plans || []).map(p => `
-              <tr>
-                <td>${p.displayOrder}</td>
-                <td>${escape(p.name)}</td>
-                <td>${escape(p.price)}</td>
-                <td>${escape(p.period) || '—'}</td>
-                <td>${(p.features || []).length}</td>
-                <td>${p.isPopular ? 'Yes' : 'No'}</td>
-                <td><span class="badge" style="background:${p.isPublished ? '#22c55e33' : ''};color:${p.isPublished ? '#22c55e' : '#888'}">${p.isPublished ? 'Published' : 'Draft'}</span></td>
-                <td>
-                  <button class="btn-secondary" data-id="${p.id}" data-action="edit-pricing">Edit</button>
-                  <button class="btn-danger" data-id="${p.id}" data-action="delete-pricing">Delete</button>
-                </td>
-              </tr>`).join('')}
-          </tbody>
-        </table>`;
-
-      list.querySelectorAll('button[data-action="edit-pricing"]').forEach(b =>
-        b.addEventListener('click', () => editPricingPlan(b.dataset.id)));
-      list.querySelectorAll('button[data-action="delete-pricing"]').forEach(b =>
-        b.addEventListener('click', async () => { if (!confirm('Delete this pricing plan?')) return; try { await api('/api/admin/content/pricing/' + b.dataset.id, { method: 'DELETE' }); loadPricing(); } catch(err){ setGlobalError(err.message); } }));
-    } catch (err) { setGlobalError(err.message); }
-  }
-
-  document.getElementById('new-pricing')?.addEventListener('click', () => openPricingModal());
-  document.getElementById('refresh-pricing')?.addEventListener('click', () => loadPricing());
-
-  async function editPricingPlan(id) {
-    let plan;
-    try {
-      const plans = await api('/api/admin/content/pricing');
-      plan = (plans || []).find(p => p.id === id);
-    } catch (err) { return setGlobalError(err.message); }
-    if (!plan) return;
-    openPricingModal(plan);
-  }
-
-  function openPricingModal(plan) {
-    const isEdit = !!plan;
-    openModal(`
-      <h2>${isEdit ? 'Edit pricing plan' : 'New pricing plan'}</h2>
-      <label for="p-name">Name</label><input id="p-name" type="text" value="${isEdit ? escape(plan.name) : ''}">
-      <label for="p-subtitle">Subtitle</label><input id="p-subtitle" type="text" value="${isEdit ? escape(plan.subtitle || '') : ''}">
-      <label for="p-price">Price (e.g. 2,499 or Custom)</label><input id="p-price" type="text" value="${isEdit ? escape(plan.price) : ''}">
-      <label for="p-period">Period (e.g. /month or /annum)</label><input id="p-period" type="text" value="${isEdit ? escape(plan.period || '') : ''}">
-      <label for="p-features">Features (one per line)</label><textarea id="p-features" rows="5">${isEdit ? (plan.features || []).map(escape).join('\n') : ''}</textarea>
-      <label for="p-order">Display order</label><input id="p-order" type="number" value="${isEdit ? plan.displayOrder : '0'}">
-      <label for="p-popular"><input type="checkbox" id="p-popular" ${!isEdit || plan.isPopular ? 'checked' : ''}> Most popular</label>
-      <label for="p-published"><input type="checkbox" id="p-published" ${!isEdit || plan.isPublished ? 'checked' : ''}> Published</label>
-      <div class="actions">
-        <button class="btn-primary" id="save-pricing">Save</button>
-        <button class="btn-secondary close">Cancel</button>
-      </div>`);
-    const id = isEdit ? plan.id : '';
-    const method = isEdit ? 'PUT' : 'POST';
-    const path = isEdit ? '/api/admin/content/pricing/' + id : '/api/admin/content/pricing';
-    document.getElementById('save-pricing').addEventListener('click', async () => {
-      const payload = {
-        name: document.getElementById('p-name').value.trim(),
-        subtitle: document.getElementById('p-subtitle').value.trim() || null,
-        price: document.getElementById('p-price').value.trim(),
-        period: document.getElementById('p-period').value.trim() || null,
-        features: (document.getElementById('p-features').value || '').split('\n').map(x => x.trim()).filter(Boolean),
-        displayOrder: parseInt(document.getElementById('p-order').value || '0', 10),
-        isPopular: document.getElementById('p-popular').checked,
-        isPublished: document.getElementById('p-published').checked
-      };
-      try { await api(path, { method, body: payload }); document.getElementById('modal').style.display = 'none'; loadPricing(); }
-      catch (err) { setGlobalError(err.message); }
-    });
-  }
 
   // ---------------------------------------------------------------------------
   // Helpers

@@ -6,9 +6,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Kennen.Api.Controllers;
 
-/// <summary>Read-only AI subscription pricing feed for the marketing site.</summary>
+/// <summary>
+/// Read-only public pricing feed for AI subscription plans. Only published plans and features
+/// are returned, ordered by display order.
+/// </summary>
 [ApiController]
-[Route("api/content/pricing")]
+[Route("api/pricing")]
 [AllowAnonymous]
 [Produces("application/json")]
 [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any, VaryByQueryKeys = new[] { "*" })]
@@ -18,7 +21,7 @@ public class PricingController : ControllerBase
 
     public PricingController(KennenDbContext db) => _db = db;
 
-    [HttpGet]
+    [HttpGet("plans")]
     [ProducesResponseType(typeof(IReadOnlyList<PricingPlanResponse>), StatusCodes.Status200OK)]
     public async Task<ActionResult<IReadOnlyList<PricingPlanResponse>>> GetPlans(CancellationToken ct)
     {
@@ -29,6 +32,24 @@ public class PricingController : ControllerBase
             .OrderBy(p => p.DisplayOrder)
             .ToListAsync(ct);
 
-        return Ok(plans.Select(PricingPlanResponse.From).ToList());
+        return Ok(plans.Select(p => PricingPlanResponse.From(p, publishedOnly: true)).ToList());
+    }
+
+    [HttpGet("plans/{slug}")]
+    [ProducesResponseType(typeof(PricingPlanResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<PricingPlanResponse>> GetPlan(string slug, CancellationToken ct)
+    {
+        var plan = await _db.PricingPlans
+            .AsNoTracking()
+            .Include(p => p.Features)
+            .SingleOrDefaultAsync(p => p.Slug == slug && p.IsPublished, ct);
+
+        if (plan is null)
+        {
+            return NotFound();
+        }
+
+        return Ok(PricingPlanResponse.From(plan, publishedOnly: true));
     }
 }

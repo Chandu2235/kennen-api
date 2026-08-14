@@ -2,25 +2,33 @@ using Kennen.Domain.Common;
 
 namespace Kennen.Domain.Entities;
 
-/// <summary>AI subscription pricing plan displayed on the marketing site.</summary>
+/// <summary>
+/// An AI subscription or service-tier plan shown on the marketing site.
+/// The <see cref="Slug"/> is the stable, URL-friendly identifier the frontend uses.
+/// </summary>
 public class PricingPlan : EntityBase
 {
+    public string Slug { get; set; } = string.Empty;
+
     public string Name { get; set; } = string.Empty;
 
     public string? Subtitle { get; set; }
 
-    /// <summary>E.g. "$499" or "Custom".</summary>
+    /// <summary>Displayed price, e.g. "$999" or "Custom".</summary>
     public string Price { get; set; } = string.Empty;
 
-    /// <summary>E.g. "/month" or "/project".</summary>
-    public string? Period { get; set; }
+    /// <summary>Billing period, e.g. "/month" or "/year".</summary>
+    public string? BillingPeriod { get; set; }
 
-    /// <summary>Bullet list of features, stored one per line.</summary>
-    public ICollection<PricingPlanFeature> Features { get; set; } = new List<PricingPlanFeature>();
+    /// <summary>Short description shown under the plan name.</summary>
+    public string? Description { get; set; }
+
+    /// <summary>Whether this is the recommended / highlighted tier.</summary>
+    public bool IsFeatured { get; set; }
 
     public int DisplayOrder { get; set; }
 
-    public bool IsPopular { get; set; }
-
     public bool IsPublished { get; set; } = true;
+
+    public ICollection<PricingPlanFeature> Features { get; set; } = new List<PricingPlanFeature>();
 }

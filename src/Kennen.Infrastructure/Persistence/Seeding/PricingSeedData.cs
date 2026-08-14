@@ -6,66 +6,59 @@ internal static class PricingSeedData
 {
     public static IReadOnlyList<PricingPlan> Plans() => new List<PricingPlan>
     {
-        Plan("Starter", "For teams beginning their AI journey", "$2,499", "/month",
-            new[]
-            {
-                "AI readiness assessment",
-                "Strategy roadmap",
-                "1 pilot use case",
-                "Email support"
-            },
-            order: 1),
-        Plan("Growth", "For enterprises scaling AI adoption", "$7,499", "/month",
-            new[]
-            {
-                "Everything in Starter",
-                "Up to 5 AI use cases",
-                "Dedicated AI engineer",
-                "RAG pipeline setup",
-                "Priority support"
-            },
-            order: 2,
-            isPopular: true),
-        Plan("Enterprise", "For orgs transforming at scale", "Custom", "/annum",
-            new[]
-            {
-                "Unlimited AI use cases",
-                "Multi-agent orchestration",
-                "Custom model development",
-                "24×7 global support",
-                "Executive advisory"
-            },
-            order: 3)
-    };
-
-    private static PricingPlan Plan(
-        string name,
-        string subtitle,
-        string price,
-        string period,
-        string[] features,
-        int order,
-        bool isPopular = false)
-    {
-        var plan = new PricingPlan
+        new()
         {
-            Name = name,
-            Subtitle = subtitle,
-            Price = price,
-            Period = period,
-            DisplayOrder = order,
-            IsPopular = isPopular
-        };
-
-        for (var i = 0; i < features.Length; i++)
-        {
-            plan.Features.Add(new PricingPlanFeature
+            Slug = "starter",
+            Name = "Starter",
+            Subtitle = "For small teams exploring AI",
+            Price = "$999",
+            BillingPeriod = "/month",
+            Description = "Kick-start your AI journey with essential capabilities and guided onboarding.",
+            DisplayOrder = 1,
+            Features = new List<PricingPlanFeature>
             {
-                Text = features[i],
-                DisplayOrder = i + 1
-            });
+                new() { Text = "1 AI use case implementation", DisplayOrder = 1 },
+                new() { Text = "5 model inference endpoints", DisplayOrder = 2 },
+                new() { Text = "Email support", DisplayOrder = 3 },
+                new() { Text = "Basic analytics dashboard", DisplayOrder = 4 }
+            }
+        },
+        new()
+        {
+            Slug = "growth",
+            Name = "Growth",
+            Subtitle = "For scaling AI across the enterprise",
+            Price = "$4,999",
+            BillingPeriod = "/month",
+            Description = "Scale AI pilots into production with governance, integrations, and priority support.",
+            IsFeatured = true,
+            DisplayOrder = 2,
+            Features = new List<PricingPlanFeature>
+            {
+                new() { Text = "Unlimited AI use cases", DisplayOrder = 1 },
+                new() { Text = "RAG and document intelligence", DisplayOrder = 2 },
+                new() { Text = "Agentic AI workflow orchestration", DisplayOrder = 3 },
+                new() { Text = "Multi-cloud deployment", DisplayOrder = 4 },
+                new() { Text = "Dedicated account manager", DisplayOrder = 5 }
+            }
+        },
+        new()
+        {
+            Slug = "enterprise",
+            Name = "Enterprise",
+            Subtitle = "Custom AI transformation programs",
+            Price = "Custom",
+            BillingPeriod = null,
+            Description = "Tailored AI strategy, co-innovation, and enterprise-grade SLAs for global organisations.",
+            DisplayOrder = 3,
+            Features = new List<PricingPlanFeature>
+            {
+                new() { Text = "Custom model development and fine-tuning", DisplayOrder = 1 },
+                new() { Text = "Private cloud or on-premise options", DisplayOrder = 2 },
+                new() { Text = "24x7 global support with SLAs", DisplayOrder = 3 },
+                new() { Text = "AI governance and risk framework", DisplayOrder = 4 },
+                new() { Text = "Executive advisory and training", DisplayOrder = 5 }
+            }
         }
-
-        return plan;
-    }
+    };
 }

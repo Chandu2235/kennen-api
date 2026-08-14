@@ -17,9 +17,9 @@ public class KennenDbContext : IdentityDbContext<ApplicationUser, ApplicationRol
     public DbSet<StatMetric> StatMetrics => Set<StatMetric>();
     public DbSet<JobPosting> JobPostings => Set<JobPosting>();
     public DbSet<JobApplication> JobApplications => Set<JobApplication>();
-    public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
     public DbSet<PricingPlan> PricingPlans => Set<PricingPlan>();
     public DbSet<PricingPlanFeature> PricingPlanFeatures => Set<PricingPlanFeature>();
+    public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
