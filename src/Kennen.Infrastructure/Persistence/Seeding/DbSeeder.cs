@@ -115,6 +115,11 @@ public class DbSeeder
             _db.Testimonials.AddRange(ContentSeedData.Testimonials());
         }
 
+        if (!await _db.PricingPlans.AnyAsync(ct))
+        {
+            _db.PricingPlans.AddRange(PricingSeedData.Plans());
+        }
+
         await _db.SaveChangesAsync(ct);
     }
 }

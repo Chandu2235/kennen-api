@@ -18,6 +18,8 @@ public class KennenDbContext : IdentityDbContext<ApplicationUser, ApplicationRol
     public DbSet<JobPosting> JobPostings => Set<JobPosting>();
     public DbSet<JobApplication> JobApplications => Set<JobApplication>();
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
+    public DbSet<PricingPlan> PricingPlans => Set<PricingPlan>();
+    public DbSet<PricingPlanFeature> PricingPlanFeatures => Set<PricingPlanFeature>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

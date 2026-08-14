@@ -43,6 +43,7 @@
           <a href="#" data-page="dashboard" class="active">Dashboard</a>
           <a href="#" data-page="leads">Leads</a>
           <a href="#" data-page="content">Content</a>
+          <a href="#" data-page="pricing">Pricing</a>
           <a href="#" data-page="careers">Careers</a>
           <a href="#" data-page="applications">Applications</a>
         </nav>
@@ -86,6 +87,14 @@
           <div id="content-list"></div>
         </section>
 
+        <section id="page-pricing" class="page" style="display:none;">
+          <div class="filters">
+            <button id="new-pricing" class="btn-primary">+ New pricing plan</button>
+            <button id="refresh-pricing" class="btn-secondary">Refresh</button>
+          </div>
+          <div id="pricing-list"></div>
+        </section>
+
         <section id="page-careers" class="page" style="display:none;">
           <button id="new-job" class="btn-primary">+ New job</button>
           <table class="data-table">
@@ -118,6 +127,6 @@
     <div class="modal" id="modal-body"></div>
   </div>
 
-  <script src="/admin/admin.js?v=2"></script>
+  <script src="/admin/admin.js?v=3"></script>
 </body>
 </html>
