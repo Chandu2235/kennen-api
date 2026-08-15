@@ -752,15 +752,20 @@
           <td>${escape(j.location)}</td>
           <td>${j.isPublished ? (j.closesAtUtc && new Date(j.closesAtUtc) < new Date() ? 'Closed' : 'Open') : 'Draft'}</td>
           <td>
+            <button class="btn-secondary" data-id="${j.id}" data-action="edit-job">Edit</button>
             <button class="btn-secondary" data-id="${j.id}" data-action="view-job">View</button>
             <button class="btn-danger" data-id="${j.id}" data-action="delete-job">Delete</button>
           </td>
         </tr>`).join('');
 
-      document.getElementById('jobs-body').querySelectorAll('button[data-action="view-job"]').forEach(b =>
-        b.addEventListener('click', () => viewJob(b.dataset.id)));
-      document.getElementById('jobs-body').querySelectorAll('button[data-action="delete-job"]').forEach(b =>
-        b.addEventListener('click', async () => { if (!confirm('Delete this job?')) return; try { await api('/api/admin/careers/jobs/' + b.dataset.id, { method: 'DELETE' }); loadJobs(); } catch(err){ setGlobalError(err.message); } }));
+      const body = document.getElementById('jobs-body');
+      body.querySelectorAll('button[data-action="edit-job"]').forEach(b => b.addEventListener('click', () => editJob(b.dataset.id)));
+      body.querySelectorAll('button[data-action="view-job"]').forEach(b => b.addEventListener('click', () => viewJob(b.dataset.id)));
+      body.querySelectorAll('button[data-action="delete-job"]').forEach(b => b.addEventListener('click', async () => {
+        if (!confirm('Delete this job?')) return;
+        try { await api('/api/admin/careers/jobs/' + b.dataset.id, { method: 'DELETE' }); loadJobs(); }
+        catch (err) { setGlobalError(err.message); }
+      }));
     } catch (err) { setGlobalError(err.message); }
   }
 
@@ -773,47 +778,78 @@
         <p><strong>Department:</strong> ${escape(job.department)} | <strong>Location:</strong> ${escape(job.location)}</p>
         <p><strong>Type:</strong> ${job.employmentType} (${job.workArrangement})</p>
         <p><strong>Status:</strong> ${job.isPublished ? (job.isOpenForApplications ? 'Open' : 'Closed') : 'Draft'}</p>
-        <label>Description</label>
-        <textarea rows="6" readonly>${escape(job.description)}</textarea>
-        <label>Responsibilities</label>
-        <textarea rows="4" readonly>${(job.responsibilities || []).map(x => '• ' + x).join('\n')}</textarea>
-        <label>Requirements</label>
-        <textarea rows="4" readonly>${(job.requirements || []).map(x => '• ' + x).join('\n')}</textarea>
+        <label>Description</label><textarea rows="6" readonly>${escape(job.description)}</textarea>
+        <label>Responsibilities</label><textarea rows="4" readonly>${(job.responsibilities || []).map(x => '• ' + x).join('\n')}</textarea>
+        <label>Requirements</label><textarea rows="4" readonly>${(job.requirements || []).map(x => '• ' + x).join('\n')}</textarea>
         <div class="actions"><button class="btn-secondary close">Close</button></div>`);
     } catch (err) { setGlobalError(err.message); }
   }
 
-  document.getElementById('new-job').addEventListener('click', () => {
+  async function editJob(id) {
+    try { openJobModal(await api('/api/admin/careers/jobs/' + id)); }
+    catch (err) { setGlobalError(err.message); }
+  }
+
+  function localDateTime(value) {
+    if (!value) return '';
+    const date = new Date(value);
+    const pad = n => String(n).padStart(2, '0');
+    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+  }
+
+  function enumOptions(values, selected) {
+    return values.map(value => `<option value="${value}" ${value === selected ? 'selected' : ''}>${value}</option>`).join('');
+  }
+
+  function openJobModal(job) {
+    const isEdit = !!job;
     openModal(`
-      <h2>New job posting</h2>
-      <label for="j-slug">Slug</label><input id="j-slug" type="text" value="">
-      <label for="j-title">Title</label><input id="j-title" type="text" value="">
-      <label for="j-dept">Department</label><input id="j-dept" type="text" value="">
-      <label for="j-loc">Location</label><input id="j-loc" type="text" value="">
-      <label for="j-desc">Description</label><textarea id="j-desc" rows="4"></textarea>
-      <label for="j-reqs">Requirements (one per line)</label><textarea id="j-reqs" rows="4"></textarea>
+      <h2>${isEdit ? 'Edit job posting' : 'New job posting'}</h2>
+      <div class="modal-error" id="job-modal-error" role="alert"></div>
+      <label for="j-slug">Slug</label><input id="j-slug" type="text" value="${isEdit ? escape(job.slug) : ''}" ${isEdit ? 'readonly' : ''} placeholder="e.g. senior-qa-engineer">
+      <label for="j-title">Title</label><input id="j-title" type="text" value="${isEdit ? escape(job.title) : ''}">
+      <label for="j-dept">Department</label><input id="j-dept" type="text" value="${isEdit ? escape(job.department) : ''}">
+      <label for="j-loc">Location</label><input id="j-loc" type="text" value="${isEdit ? escape(job.location) : ''}">
+      <label for="j-type">Employment type</label><select id="j-type">${enumOptions(['FullTime', 'PartTime', 'Contract', 'Internship'], isEdit ? job.employmentType : 'FullTime')}</select>
+      <label for="j-arrangement">Work arrangement</label><select id="j-arrangement">${enumOptions(['OnSite', 'Hybrid', 'Remote'], isEdit ? job.workArrangement : 'Hybrid')}</select>
+      <label for="j-level">Experience level</label><input id="j-level" type="text" value="${isEdit ? escape(job.experienceLevel || '') : ''}">
+      <label for="j-desc">Description</label><textarea id="j-desc" rows="4">${isEdit ? escape(job.description) : ''}</textarea>
+      <label for="j-resps">Responsibilities (one per line)</label><textarea id="j-resps" rows="4">${isEdit ? escape((job.responsibilities || []).join('\n')) : ''}</textarea>
+      <label for="j-reqs">Requirements (one per line)</label><textarea id="j-reqs" rows="4">${isEdit ? escape((job.requirements || []).join('\n')) : ''}</textarea>
+      <label for="j-closes">Closing date</label><input id="j-closes" type="datetime-local" value="${isEdit ? localDateTime(job.closesAtUtc) : ''}">
+      <label><input type="checkbox" id="j-published" ${isEdit && job.isPublished ? 'checked' : ''}> Published / open for applications</label>
       <div class="actions">
-        <button class="btn-primary" id="save-job">Save draft</button>
+        <button class="btn-primary" id="save-job">${isEdit ? 'Save changes' : 'Save draft'}</button>
         <button class="btn-secondary close">Cancel</button>
       </div>`);
 
     document.getElementById('save-job').addEventListener('click', async () => {
+      const slug = document.getElementById('j-slug').value.trim();
+      const error = document.getElementById('job-modal-error');
+      if (!slug || !/^[a-z0-9-]+$/.test(slug)) { error.textContent = 'Slug must use lowercase letters, numbers, and hyphens only.'; return; }
       const body = {
-        slug: document.getElementById('j-slug').value.trim(),
+        slug,
         title: document.getElementById('j-title').value.trim(),
         department: document.getElementById('j-dept').value.trim(),
         location: document.getElementById('j-loc').value.trim(),
+        employmentType: document.getElementById('j-type').value,
+        workArrangement: document.getElementById('j-arrangement').value,
+        experienceLevel: document.getElementById('j-level').value.trim() || null,
         description: document.getElementById('j-desc').value.trim(),
-        requirements: (document.getElementById('j-reqs').value || '').split('\n').map(x => x.trim()).filter(Boolean),
-        responsibilities: [],
-        employmentType: 'FullTime',
-        workArrangement: 'Hybrid',
-        isPublished: false
+        responsibilities: document.getElementById('j-resps').value.split('\n').map(x => x.trim()).filter(Boolean),
+        requirements: document.getElementById('j-reqs').value.split('\n').map(x => x.trim()).filter(Boolean),
+        closesAtUtc: document.getElementById('j-closes').value ? new Date(document.getElementById('j-closes').value).toISOString() : null,
+        isPublished: document.getElementById('j-published').checked
       };
-      try { await api('/api/admin/careers/jobs', { method: 'POST', body }); document.getElementById('modal').style.display = 'none'; loadJobs(); }
-      catch (err) { setGlobalError(err.message); }
+      try {
+        await api(isEdit ? '/api/admin/careers/jobs/' + job.id : '/api/admin/careers/jobs', { method: isEdit ? 'PUT' : 'POST', body });
+        document.getElementById('modal').style.display = 'none';
+        loadJobs();
+      } catch (err) { error.textContent = err.message; }
     });
-  });
+  }
+
+  document.getElementById('new-job').addEventListener('click', () => openJobModal());
 
   // ---------------------------------------------------------------------------
   // Applications
@@ -832,10 +868,57 @@
           <td><span class="badge ${a.status}">${a.status}</span></td>
           <td>${new Date(a.createdAtUtc).toLocaleString()}</td>
           <td>
+            <button class="btn-secondary" data-id="${a.id}" data-action="view-application">View</button>
+            <button class="btn-secondary" data-id="${a.id}" data-action="edit-application">Edit</button>
             <a class="btn-secondary" href="${API}/api/admin/careers/applications/${a.id}/resume" target="_blank" download>Download CV</a>
           </td>
         </tr>`).join('');
+      const body = document.getElementById('applications-body');
+      body.querySelectorAll('button[data-action="view-application"]').forEach(b => b.addEventListener('click', () => viewApplication(b.dataset.id)));
+      body.querySelectorAll('button[data-action="edit-application"]').forEach(b => b.addEventListener('click', () => editApplication(b.dataset.id)));
       renderPagination('apps-paging', data, (p) => { state.applications.page = p; loadApplications(); });
+    } catch (err) { setGlobalError(err.message); }
+  }
+
+  async function viewApplication(id) {
+    try {
+      const a = await api('/api/admin/careers/applications/' + id);
+      openModal(`
+        <h2>Application details</h2>
+        <p><strong>Applicant:</strong> ${escape(a.fullName)}</p>
+        <p><strong>Email:</strong> ${escape(a.email)}${a.phone ? ` · ${escape(a.phone)}` : ''}</p>
+        <p><strong>Role:</strong> ${escape(a.jobTitle) || '—'}</p>
+        ${a.linkedInUrl ? `<p><strong>LinkedIn:</strong> <a href="${escape(a.linkedInUrl)}" target="_blank" rel="noreferrer">${escape(a.linkedInUrl)}</a></p>` : ''}
+        <p><strong>Status:</strong> <span class="badge ${a.status}">${a.status}</span></p>
+        <label>Cover letter</label><textarea rows="6" readonly>${escape(a.coverLetter || '—')}</textarea>
+        ${a.internalNotes ? `<label>Internal notes</label><textarea rows="4" readonly>${escape(a.internalNotes)}</textarea>` : ''}
+        <div class="actions"><button class="btn-secondary close">Close</button></div>`);
+    } catch (err) { setGlobalError(err.message); }
+  }
+
+  async function editApplication(id) {
+    try {
+      const a = await api('/api/admin/careers/applications/' + id);
+      openModal(`
+        <h2>Update application</h2>
+        <p>${escape(a.fullName)} · ${escape(a.jobTitle) || 'Unassigned role'}</p>
+        <div class="modal-error" id="application-modal-error" role="alert"></div>
+        <label for="application-status">Status</label>
+        <select id="application-status">${enumOptions(['Received', 'Screening', 'Interviewing', 'Offered', 'Hired', 'Rejected', 'Withdrawn'], a.status)}</select>
+        <label for="application-notes">Internal notes</label>
+        <textarea id="application-notes" rows="5">${escape(a.internalNotes || '')}</textarea>
+        <div class="actions"><button class="btn-primary" id="save-application">Save</button><button class="btn-secondary close">Cancel</button></div>`);
+      document.getElementById('save-application').addEventListener('click', async () => {
+        const error = document.getElementById('application-modal-error');
+        try {
+          await api('/api/admin/careers/applications/' + id, { method: 'PATCH', body: {
+            status: document.getElementById('application-status').value,
+            internalNotes: document.getElementById('application-notes').value
+          }});
+          document.getElementById('modal').style.display = 'none';
+          loadApplications();
+        } catch (err) { error.textContent = err.message; }
+      });
     } catch (err) { setGlobalError(err.message); }
   }
 
