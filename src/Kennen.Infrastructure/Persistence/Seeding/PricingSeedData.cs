@@ -9,6 +9,7 @@ internal static class PricingSeedData
         new()
         {
             Slug = "starter",
+            Category = "ai",
             Name = "Starter",
             Subtitle = "For small teams exploring AI",
             Price = "$999",
@@ -26,6 +27,7 @@ internal static class PricingSeedData
         new()
         {
             Slug = "growth",
+            Category = "ai",
             Name = "Growth",
             Subtitle = "For scaling AI across the enterprise",
             Price = "$4,999",
@@ -45,6 +47,7 @@ internal static class PricingSeedData
         new()
         {
             Slug = "enterprise",
+            Category = "ai",
             Name = "Enterprise",
             Subtitle = "Custom AI transformation programs",
             Price = "Custom",
@@ -58,6 +61,62 @@ internal static class PricingSeedData
                 new() { Text = "24x7 global support with SLAs", DisplayOrder = 3 },
                 new() { Text = "AI governance and risk framework", DisplayOrder = 4 },
                 new() { Text = "Executive advisory and training", DisplayOrder = 5 }
+            }
+        },
+        new()
+        {
+            Slug = "qa-starter",
+            Category = "qa-testing",
+            Name = "QA Starter",
+            Subtitle = "For focused QA engagements and pilot programs",
+            Price = "$2,499",
+            BillingPeriod = "/month",
+            Description = "A practical quality engineering foundation for one product or delivery team.",
+            DisplayOrder = 1,
+            Features = new List<PricingPlanFeature>
+            {
+                new() { Text = "Functional and regression testing", DisplayOrder = 1 },
+                new() { Text = "API and integration test coverage", DisplayOrder = 2 },
+                new() { Text = "Test planning and reporting", DisplayOrder = 3 },
+                new() { Text = "Email support (8x5)", DisplayOrder = 4 }
+            }
+        },
+        new()
+        {
+            Slug = "qa-professional",
+            Category = "qa-testing",
+            Name = "QA Professional",
+            Subtitle = "For growing teams scaling quality across releases",
+            Price = "$7,999",
+            BillingPeriod = "/month",
+            Description = "Continuous quality engineering with automation, performance, and release assurance.",
+            IsFeatured = true,
+            DisplayOrder = 2,
+            Features = new List<PricingPlanFeature>
+            {
+                new() { Text = "End-to-end automation testing", DisplayOrder = 1 },
+                new() { Text = "Performance and security testing", DisplayOrder = 2 },
+                new() { Text = "CI/CD quality gates", DisplayOrder = 3 },
+                new() { Text = "Dedicated QA lead", DisplayOrder = 4 },
+                new() { Text = "Priority support (12x5)", DisplayOrder = 5 }
+            }
+        },
+        new()
+        {
+            Slug = "qa-enterprise",
+            Category = "qa-testing",
+            Name = "QA Enterprise",
+            Subtitle = "For mission-critical systems and regulated environments",
+            Price = "Custom",
+            Description = "A dedicated quality engineering practice aligned to enterprise risk, compliance, and release goals.",
+            DisplayOrder = 3,
+            Features = new List<PricingPlanFeature>
+            {
+                new() { Text = "Dedicated QA engineering team", DisplayOrder = 1 },
+                new() { Text = "AI-driven testing and analytics", DisplayOrder = 2 },
+                new() { Text = "24x7 premium support with SLAs", DisplayOrder = 3 },
+                new() { Text = "Compliance and validation assurance", DisplayOrder = 4 },
+                new() { Text = "Executive quality governance", DisplayOrder = 5 }
             }
         }
     };

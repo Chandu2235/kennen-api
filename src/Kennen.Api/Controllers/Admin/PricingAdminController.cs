@@ -21,10 +21,17 @@ public class PricingAdminController : ControllerBase
 
     [HttpGet("plans")]
     [ProducesResponseType(typeof(IReadOnlyList<PricingPlanResponse>), StatusCodes.Status200OK)]
-    public async Task<ActionResult<IReadOnlyList<PricingPlanResponse>>> GetPlans(CancellationToken ct)
+    public async Task<ActionResult<IReadOnlyList<PricingPlanResponse>>> GetPlans([FromQuery] string? category, CancellationToken ct)
     {
-        var plans = await _db.PricingPlans
-            .AsNoTracking()
+        var plansQuery = _db.PricingPlans
+            .AsNoTracking();
+
+        if (!string.IsNullOrWhiteSpace(category))
+        {
+            plansQuery = plansQuery.Where(p => p.Category == category);
+        }
+
+        var plans = await plansQuery
             .Include(p => p.Features)
             .OrderBy(p => p.DisplayOrder)
             .ToListAsync(ct);
@@ -156,6 +163,7 @@ public class PricingAdminController : ControllerBase
     private static void Apply(UpsertPricingPlanRequest request, PricingPlan plan)
     {
         plan.Slug = request.Slug;
+        plan.Category = request.Category;
         plan.Name = request.Name;
         plan.Subtitle = request.Subtitle;
         plan.Price = request.Price;

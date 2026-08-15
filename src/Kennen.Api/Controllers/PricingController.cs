@@ -23,11 +23,18 @@ public class PricingController : ControllerBase
 
     [HttpGet("plans")]
     [ProducesResponseType(typeof(IReadOnlyList<PricingPlanResponse>), StatusCodes.Status200OK)]
-    public async Task<ActionResult<IReadOnlyList<PricingPlanResponse>>> GetPlans(CancellationToken ct)
+    public async Task<ActionResult<IReadOnlyList<PricingPlanResponse>>> GetPlans([FromQuery] string? category, CancellationToken ct)
     {
-        var plans = await _db.PricingPlans
+        var plansQuery = _db.PricingPlans
             .AsNoTracking()
-            .Where(p => p.IsPublished)
+            .Where(p => p.IsPublished);
+
+        if (!string.IsNullOrWhiteSpace(category))
+        {
+            plansQuery = plansQuery.Where(p => p.Category == category);
+        }
+
+        var plans = await plansQuery
             .Include(p => p.Features)
             .OrderBy(p => p.DisplayOrder)
             .ToListAsync(ct);

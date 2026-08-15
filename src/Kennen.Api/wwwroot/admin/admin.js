@@ -628,7 +628,7 @@
             ${p.isFeatured ? '<span class="badge" style="background:#eab30833;color:#eab308">Featured</span>' : ''}
           </span>
         </h3>
-        <p style="color:var(--muted);margin-top:0.25rem">${p.price}${p.billingPeriod || ''} · ${p.features.length} features · order ${p.displayOrder}</p>
+        <p style="color:var(--muted);margin-top:0.25rem">${p.category} · ${p.price}${p.billingPeriod || ''} · ${p.features.length} features · order ${p.displayOrder}</p>
         <ul class="items">${(p.features || []).map(f => `
           <li data-feature-id="${f.id}">
             ${escape(f.text)} ${f.isPublished ? '' : '<small>(draft)</small>'}
@@ -655,6 +655,7 @@
     openModal(`
       <h2>${isEdit ? 'Edit plan' : 'New plan'}</h2>
       <label for="p-slug">Slug</label><input id="p-slug" type="text" value="${isEdit ? escape(plan.slug) : ''}" ${isEdit ? 'readonly' : ''}>
+      <label for="p-category">Category</label><input id="p-category" type="text" value="${isEdit ? escape(plan.category || 'ai') : 'ai'}" placeholder="ai or qa-testing">
       <label for="p-name">Name</label><input id="p-name" type="text" value="${isEdit ? escape(plan.name) : ''}">
       <label for="p-subtitle">Subtitle</label><input id="p-subtitle" type="text" value="${isEdit ? escape(plan.subtitle || '') : ''}">
       <label for="p-price">Price</label><input id="p-price" type="text" value="${isEdit ? escape(plan.price) : ''}">
@@ -673,6 +674,7 @@
     document.getElementById('save-plan').addEventListener('click', async () => {
       const payload = {
         slug: document.getElementById('p-slug').value.trim(),
+        category: document.getElementById('p-category').value.trim(),
         name: document.getElementById('p-name').value.trim(),
         subtitle: document.getElementById('p-subtitle').value.trim() || null,
         price: document.getElementById('p-price').value.trim(),

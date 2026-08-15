@@ -98,7 +98,12 @@ internal static class ContentSeedData
                 ("Automotive", "Testing automotive software solutions, connected vehicle platforms, and dealership management systems.", null),
                 ("Hospitality", "Quality assurance for hotel management systems, booking platforms, and guest experience applications.", null),
                 ("Banking & ERP", "Testing enterprise resource planning systems and core banking applications with focus on data security.", null)
-            })
+            }),
+
+        Section("qa-pricing", "Pricing", "QA and Testing plans",
+            "Flexible, transparent QA and testing engagement models designed for teams at every stage of their quality journey, from focused pilots to dedicated QA teams.",
+            order: 8,
+            items: Array.Empty<(string Title, string Summary, string? Icon)>())
     };
 
     public static IReadOnlyList<StatMetric> Stats() => new List<StatMetric>

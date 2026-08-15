@@ -10,6 +10,9 @@ public class PricingPlan : EntityBase
 {
     public string Slug { get; set; } = string.Empty;
 
+    /// <summary>Stable content grouping used by the public API, e.g. "ai" or "qa-testing".</summary>
+    public string Category { get; set; } = "ai";
+
     public string Name { get; set; } = string.Empty;
 
     public string? Subtitle { get; set; }

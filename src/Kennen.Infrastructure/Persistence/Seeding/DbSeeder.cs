@@ -115,9 +115,16 @@ public class DbSeeder
             _db.Testimonials.AddRange(ContentSeedData.Testimonials());
         }
 
-        if (!await _db.PricingPlans.AnyAsync(ct))
+        var existingPricingSlugs = await _db.PricingPlans
+            .Select(p => p.Slug)
+            .ToListAsync(ct);
+        var missingPricingPlans = PricingSeedData.Plans()
+            .Where(p => !existingPricingSlugs.Contains(p.Slug))
+            .ToList();
+        if (missingPricingPlans.Count > 0)
         {
-            _db.PricingPlans.AddRange(PricingSeedData.Plans());
+            _db.PricingPlans.AddRange(missingPricingPlans);
+            _logger.LogInformation("Seeding {Count} pricing plan(s)", missingPricingPlans.Count);
         }
 
         await _db.SaveChangesAsync(ct);

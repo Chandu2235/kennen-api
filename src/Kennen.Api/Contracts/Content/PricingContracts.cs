@@ -7,6 +7,7 @@ public class PricingPlanResponse
 {
     public Guid Id { get; set; }
     public string Slug { get; set; } = string.Empty;
+    public string Category { get; set; } = "ai";
     public string Name { get; set; } = string.Empty;
     public string? Subtitle { get; set; }
     public string Price { get; set; } = string.Empty;
@@ -21,6 +22,7 @@ public class PricingPlanResponse
     {
         Id = plan.Id,
         Slug = plan.Slug,
+        Category = plan.Category,
         Name = plan.Name,
         Subtitle = plan.Subtitle,
         Price = plan.Price,
@@ -61,6 +63,11 @@ public class UpsertPricingPlanRequest
     [MaxLength(64)]
     [RegularExpression("^[a-z0-9-]+$", ErrorMessage = "Slug must be lowercase letters, digits and hyphens only.")]
     public string Slug { get; set; } = string.Empty;
+
+    [Required]
+    [MaxLength(64)]
+    [RegularExpression("^[a-z0-9-]+$", ErrorMessage = "Category must be lowercase letters, digits and hyphens only.")]
+    public string Category { get; set; } = "ai";
 
     [Required]
     [MaxLength(120)]
